@@ -2,12 +2,6 @@
     <div id="app">
         <div id="nav">
             <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" text-color="#000000" @select="handleSelect">
-                <router-link to="/"> 主页</router-link> |
-                <router-link to="/register">注册</router-link> |
-                <router-link to="/login">登陆</router-link> |
-                <router-link to="/userhome">用户</router-link> |
-                <router-link to="/userinfo">用户信息</router-link> | 
-                <router-link to="/search">商品搜索</router-link>
                 <el-submenu index="1" class="f-left">
                     <template slot="title">中国大陆</template>
                     <el-menu-item index="1-1">香港</el-menu-item>
@@ -53,6 +47,15 @@
 
                 <el-menu-item index="11" class="f-right">网站导航</el-menu-item>
             </el-menu>
+        </div>
+
+        <div class="router-view" style="margin-left:40px;">
+            <router-link to="/"> 主页</router-link> |
+            <router-link to="/register">注册</router-link> |
+            <router-link to="/login">登陆</router-link> |
+            <router-link to="/userhome">用户</router-link> |
+            <router-link to="/userinfo">用户信息</router-link> |
+            <router-link to="/search">商品搜索</router-link>
         </div>
         <router-view/>
     </div>
