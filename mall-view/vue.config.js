@@ -5,18 +5,19 @@ module.exports = {
     lintOnSave: false, // 是否开启语法检测
     devServer: {
         open: true,
-        host: 'localhost',
+        host: '127.0.0.1',
         port: 8080,
         https: false,
         hotOnly: false,
         proxy: {
             '/api': {
-                target: 'http://localhost:2828',
+                target: 'http://127.0.0.1:3000',
                 ws: true,
-                changeOrigin: true
-                // pathRewrite: {
-                //     'api': ''
-                // }
+                changeOrigin: true,
+                secure: false,
+                pathRewrite: {
+                    '^/api': ''
+                }
             }
         }
     }

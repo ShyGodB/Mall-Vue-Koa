@@ -1,16 +1,20 @@
 const KoaRouter = require('koa-router');
 const router = new KoaRouter();
+const editGod = require('../lib/god');
+const editBoss = require('../lib/boss');
 
 
-router.get('/index', async ctx => {
-    console.log(111);
-    const data = ctx.request.body;
-    console.log(data);
-    ctx.body = {msg: '成功'}
-})
+router.post("/view/listAllUser", async (ctx) => {
+    const listAllGodPromise = editGod.listAllGod();
+    const listAllBossPromise = editBoss.listAllBoss();
+    const listAllGod = await listAllGodPromise;
+    const listAllBoss = await listAllBossPromise;
+    ctx.body = {
+        god: listAllGod,
+        boss: listAllBoss
+    }
+});
+
 
 
 module.exports = router;
-
-
-

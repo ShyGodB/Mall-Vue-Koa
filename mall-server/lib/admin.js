@@ -11,7 +11,11 @@ const promisePool = pool.promise();
 
 const object = {
 
-    
+    async listAllGod() {
+        const sql = 'select * from god';
+        const [rows, fields] = promisePool.query(sql);
+        return rows;
+    }
 
 };
 

@@ -34,6 +34,11 @@ export default new Router({
            path: '/userinfo',
            name: 'userinfo',
            component: () => import(/* webpackChunkName: "about" */ './views/Userinfo.vue')
+        },
+        {
+           path: '/search',
+           name: 'search',
+           component: () => import(/* webpackChunkName: "about" */ './views/Search.vue')
         }
     ]
 })

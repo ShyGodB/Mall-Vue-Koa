@@ -34,7 +34,6 @@
 <script>
 // @ === /src
 
-import axios from 'axios'
 import Active from '../components/index/header/Active.vue'
 import Search from '../components/index/header/Search.vue'
 import Mainbox from '../components/index/body/Main.vue'
@@ -52,12 +51,6 @@ export default {
         'electronic': Electronic,
         'footer-main': MainFooter
     }
-    // created() {
-    //     axios.get('/api/index')
-    //         .then( res => {
-    //             console.log(res);
-    //         })
-    // }
 
 }
 </script>

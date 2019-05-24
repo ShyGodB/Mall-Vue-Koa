@@ -6,7 +6,8 @@
                 <router-link to="/register">注册</router-link> |
                 <router-link to="/login">登陆</router-link> |
                 <router-link to="/userhome">用户</router-link> |
-                <router-link to="/userinfo">用户信息</router-link>
+                <router-link to="/userinfo">用户信息</router-link> | 
+                <router-link to="/search">商品搜索</router-link>
                 <el-submenu index="1" class="f-left">
                     <template slot="title">中国大陆</template>
                     <el-menu-item index="1-1">香港</el-menu-item>
