@@ -5,8 +5,9 @@ const editBoss = require('../lib/boss');
 router.post("/view/addBoss", async (ctx) => {
     const data = ctx.request.body;
     const mobile = data.value.mobile;
-    const username = 'boss-' + mobile;
-    const nickname = data.value.nickname;
+    const boosId = 'boss-' + mobile;
+    const nickname = 'boss-' + mobile;
+    const username = data.value.username;
     const email = data.value.email;
     const password = data.value.password;
     const date = new Date();
@@ -14,7 +15,7 @@ router.post("/view/addBoss", async (ctx) => {
     const realname = data.value.realname;
     const idcard = data.value.idcard;
     const businesslicense = data.value.businesslicense;
-    const data1 = [username, nickname, password, mobile, registerTime, realname, idcard, businesslicense, email];
+    const data1 = [boosId, username, nickname, password, email, mobile, registerTime, realname, idcard, businesslicense];
     await editBoss.addBoss(data1);
     ctx.body = { msg: '添加店主成功' };
 });

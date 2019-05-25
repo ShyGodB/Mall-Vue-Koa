@@ -11,7 +11,7 @@
                         </el-steps>
                     </div>
 
-                    <div class="register-body" v-if="stepGod === 1">
+                    <div class="register-body" v-if="activeGod == 0">
                         <el-form :model="ruleForm" :rules="godrules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                             <el-form-item label="手机" prop="mobile">
                                 <el-input v-model="ruleForm.mobile" maxlength="11" autocomplete="off"></el-input>
@@ -22,20 +22,23 @@
                             </el-form-item>
 
                             <el-form-item>
-                                <!-- <el-button @click="submitGod('mobile')">提交</el-button> -->
                                 <el-button @click="nextGod" type="primary" :disabled="notClick1">下一步</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
 
-                    <div class="register-body" v-if="stepGod === 2">
+                    <div class="register-body" v-if="activeGod == 1">
                         <el-form :model="ruleForm" :rules="godrules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                            <el-form-item label="昵称" prop="nickname">
-                                <el-input type="text" v-model="ruleForm.nickname" maxlength="16" autocomplete="off"></el-input>
+                            <el-form-item label="用户名" prop="username">
+                                <el-input type="text" v-model="ruleForm.username" maxlength="16" autocomplete="off"></el-input>
                             </el-form-item>
 
                             <el-form-item label="邮箱" prop="email">
                                 <el-input type="text" v-model="ruleForm.email" autocomplete="off"></el-input>
+                            </el-form-item>
+
+                            <el-form-item label="密码" prop="password" v-if="activeGod === 999">
+                                <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
                             </el-form-item>
 
                             <el-form-item label="密码" prop="password">
@@ -47,13 +50,12 @@
                             </el-form-item>
 
                             <el-form-item>
-                                <!-- <el-button @click="submitGod('info')">提交</el-button> -->
                                 <el-button @click="nextGod" type="primary" :disabled="notClick2">下一步</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
 
-                    <div class="register-body success" v-if="stepGod === 3">
+                    <div class="register-body success" v-if="activeGod === 2">
                         <h2> ^_^ 恭喜你！注册成功！</h2>
                         <el-button style="margin-top:12px;" @click="complete">完成</el-button>
                     </div>
@@ -71,7 +73,7 @@
                         </el-steps>
                     </div>
 
-                    <div class="register-body" v-if="stepBoss === 1">
+                    <div class="register-body" v-if="activeBoss === 0">
                         <el-form :model="ruleForm" :rules="bossrules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                             <el-form-item label="手机" prop="mobile">
                                 <el-input v-model="ruleForm.mobile" maxlength="11" autocomplete="off"></el-input>
@@ -82,20 +84,23 @@
                             </el-form-item>
 
                             <el-form-item>
-                                <!-- <el-button @click="submitBoss('mobile')">提交</el-button> -->
                                 <el-button @click="nextBoss" type="primary" :disabled="noClick1">下一步</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
 
-                    <div class="register-body" v-if="stepBoss === 2">
+                    <div class="register-body" v-if="activeBoss === 1">
                         <el-form :model="ruleForm" :rules="bossrules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                            <el-form-item label="昵称" prop="nickname">
-                                <el-input type="text" v-model="ruleForm.nickname" maxlength="16" autocomplete="off"></el-input>
+                            <el-form-item label="用户名" prop="username">
+                                <el-input type="text" v-model="ruleForm.username" maxlength="16" autocomplete="off"></el-input>
                             </el-form-item>
 
                             <el-form-item label="邮箱" prop="email">
                                 <el-input type="text" v-model="ruleForm.email" autocomplete="off"></el-input>
+                            </el-form-item>
+
+                            <el-form-item label="密码" prop="password" v-if="activeBoss === 999">
+                                <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
                             </el-form-item>
 
                             <el-form-item label="密码" prop="password">
@@ -107,13 +112,12 @@
                             </el-form-item>
 
                             <el-form-item>
-                                <!-- <el-button @click="submitBoss('info')">提交</el-button> -->
                                 <el-button @click="nextBoss" type="primary" :disabled="noClick2">下一步</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
 
-                    <div class="register-body" v-if="stepBoss === 3">
+                    <div class="register-body" v-if="activeBoss === 2">
                         <el-form :model="ruleForm" :rules="bossrules" ref="ruleForm" label-width="100px" class="real">
                             <el-form-item label="真实姓名" prop="realname">
                                 <el-input type="text" v-model="ruleForm.realname" autocomplete="off"></el-input>
@@ -123,18 +127,21 @@
                                 <el-input type="text" v-model="ruleForm.idcard" maxlength="18" autocomplete="off"></el-input>
                             </el-form-item>
 
+                            <el-form-item label="营业许可证号" prop="businesslicense" v-if="activeBoss === 999">
+                                <el-input type="text" v-model="ruleForm.businesslicense" maxlength="18" autocomplete="off"></el-input>
+                            </el-form-item>
+
                             <el-form-item label="营业许可证号" prop="businesslicense">
                                 <el-input type="text" v-model="ruleForm.businesslicense" maxlength="18" autocomplete="off"></el-input>
                             </el-form-item>
 
                             <el-form-item>
-                                <!-- <el-button @click="submitBoss('real')">提交</el-button> -->
                                 <el-button @click="nextBoss" type="primary" :disabled="noClick3">下一步</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
 
-                    <div class="register-body success" v-if="stepBoss === 4">
+                    <div class="register-body success" v-if="activeBoss === 3">
                         <h2> ^_^ 恭喜你！注册成功！</h2>
                         <el-button style="margin-top:12px;" @click="complete">完成</el-button>
                     </div>
@@ -162,13 +169,13 @@ export default {
                 return mobileArray;
             },
 
-            listNickname: () => {
-                let nicknameArray = [];
+            listUsername: () => {
+                let usernameArray = [];
                 const array = this.existUserArray;
                 for(let i = 0; i < array.length; i++) {
-                    nicknameArray.push(array[i].nickname);
+                    usernameArray.push(array[i].username);
                 }
-                return nicknameArray;
+                return usernameArray;
             },
 
             listEmail: () => {
@@ -199,13 +206,13 @@ export default {
             }
 
         };
-        const adduser = {
+        const addUser = {
             addGod: (data) => {
                 axios({
                     url: '/api/view/addGod',
                     method: 'post',
                     data: {
-                        name: 'god',
+                        usertype: 'god',
                         value: data
                     }
                 });
@@ -233,6 +240,7 @@ export default {
                         callback(new Error("此手机号已被使用，请重新输入！"));
                     } else {
                         this.ruleForm.mobile = value;
+                        this.god.mobile = value;
                         if(this.ruleForm.vercode.length === 6) {
                             this.notClick1 = false;
                             this.nextGod();
@@ -254,23 +262,24 @@ export default {
                     callback();
                 }
             },
-            checkNickname: (rule, value, callback) => {
-                const nicknameArray = calculateMethods.listNickname();
+            checkUsername: (rule, value, callback) => {
+                const usernameArray = calculateMethods.listUsername();
                 const reg = /^[\w\u4e00-\u9fa5]{1,16}$/g;
                 if(!(reg.test(value))){
                     callback(new Error("昵称有误，请重填"));
                 } else {
-                    if(nicknameArray.indexOf(value) !== -1) {
+                    if(usernameArray.indexOf(value) !== -1) {
                         callback(new Error("此昵称已被占用，请重新输入！"));
                     } else {
-                        this.ruleForm.nickname = value;
+                        this.ruleForm.username = value;
+                        this.god.username = value;
                         if(    this.ruleForm.email.length !==0
                             && this.ruleForm.password.length !== 0
                             && this.ruleForm.repassword.length !== 0
                             && this.ruleForm.password === this.ruleForm.repassword) {
                                 this.notClick2 = false;
                                 this.nextGod();
-                                adduser.addGod(this.ruleForm);
+                                addUser.addGod(this.god);
                             }
                         callback();
                     }
@@ -286,36 +295,34 @@ export default {
                         callback(new Error("此邮箱已被占用，请重新输入！"));
                     } else {
                         this.ruleForm.email = value;
-                        if(    this.ruleForm.nickname.length !==0
+                        this.god.email = value;
+                        if(    this.ruleForm.username.length !==0
                             && this.ruleForm.password.length !== 0
                             && this.ruleForm.repassword.length !== 0
                             && this.ruleForm.password === this.ruleForm.repassword) {
                                 this.notClick2 = false;
                                 this.nextGod();
-                                adduser.addGod(this.ruleForm);
+                                addUser.addGod(this.god);
                             }
                         callback();
                     }
                 }
             },
             checkPassword: (rule, value, callback) => {
+                console.log(value)
                 const reg =  /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/g;
                 if(!(reg.test(value))){
                     callback(new Error("密码长度应为6到16，且包含字母与数字"));
                 } else {
                     this.ruleForm.password = value;
-                    if(this.ruleForm.repassword !== value) {
-                        callback(new Error("两次输入的密码不一致，请核对并重新输入！"));
-                    } else {
-                        if(    this.ruleForm.email.length !==0
-                            && this.ruleForm.password.length !== 0
-                            && this.ruleForm.password.length !== 0) {
-                                this.notClick2 = false;
-                                this.nextGod();
-                                adduser.addGod(this.ruleForm);
-                            }
-                        callback();
-                    }
+                    this.god.password = md5(value);
+                    if(    this.ruleForm.email.length !==0
+                        && this.ruleForm.password.length !== 0
+                        && this.ruleForm.repassword.length !== 0) {
+                            this.notClick2 = false;
+                            this.nextGod();
+                            addUser.addGod(this.god);
+                        }
                     callback();
                 }
             },
@@ -324,7 +331,8 @@ export default {
                 if(!(reg.test(value))){
                     callback(new Error("密码长度应为6到16，且包含字母与数字"));
                 } else {
-                    this.ruleForm.repassword = value
+                    this.ruleForm.repassword = value;
+                    this.god.repassword = md5(value);
                     if(this.ruleForm.password !== value) {
                         callback(new Error("两次输入的密码不一致，请核对或重新输入！"));
                     } else {
@@ -333,12 +341,12 @@ export default {
                             && this.ruleForm.password.length !== 0) {
                                 this.notClick2 = false;
                                 this.nextGod();
-                                adduser.addGod(this.ruleForm);
+                                addUser.addGod(this.god);
                             }
                         callback();
                     }
                 }
-            },
+            }
         };
         const bossMethods = {
             checkMobile: (rule, value, callback) => {
@@ -351,6 +359,7 @@ export default {
                         callback(new Error("此手机号已被使用，请重新输入！"));
                     } else {
                         this.ruleForm.mobile = value;
+                        this.boss.mobile = value;
                         if(this.ruleForm.vercode.length === 6) {
                             this.noClick1 = false;
                             this.nextBoss();
@@ -372,16 +381,17 @@ export default {
                     callback();
                 }
             },
-            checkNickname: (rule, value, callback) => {
-                const nicknameArray = calculateMethods.listNickname();
+            checkUsername: (rule, value, callback) => {
+                const usernameArray = calculateMethods.listUsername();
                 const reg = /^[\w\u4e00-\u9fa5]{1,16}$/g;
                 if(!(reg.test(value))){
                     callback(new Error("昵称有误，请重新输入！"));
                 } else {
-                    if(nicknameArray.indexOf(value) !== -1) {
+                    if(usernameArray.indexOf(value) !== -1) {
                         callback(new Error("此昵称已被占用，请重新输入！"));
                     } else {
-                        this.ruleForm.nickname = value;
+                        this.ruleForm.username = value;
+                        this.boss.username = value;
                         if(    this.ruleForm.email.length !==0
                             && this.ruleForm.password.length !== 0
                             && this.ruleForm.repassword.length !== 0
@@ -403,7 +413,8 @@ export default {
                         callback(new Error("此邮箱已被占用，请重新输入！"));
                     } else {
                         this.ruleForm.email = value;
-                        if(    this.ruleForm.nickname.length !==0
+                        this.boss.email = value;
+                        if(    this.ruleForm.username.length !==0
                             && this.ruleForm.password.length !== 0
                             && this.ruleForm.repassword.length !== 0
                             && this.ruleForm.password === this.ruleForm.repassword) {
@@ -420,17 +431,13 @@ export default {
                     callback(new Error("密码长度应为6到16，且包含字母与数字"));
                 } else {
                     this.ruleForm.password = value;
-                    if(this.ruleForm.repassword !== value) {
-                        callback(new Error("两次输入的密码不一致，请核对并重新输入！"));
-                    } else {
-                        if(    this.ruleForm.email.length !==0
-                            && this.ruleForm.password.length !== 0
-                            && this.ruleForm.password.length !== 0) {
-                                this.noClick2 = false;
-                                this.next();
-                            }
-                        callback();
-                    }
+                    this.boss.password = md5(value);
+                    if(    this.ruleForm.email.length !==0
+                        && this.ruleForm.password.length !== 0
+                        && this.ruleForm.password.length !== 0) {
+                            this.noClick2 = false;
+                            this.next();
+                        }
                     callback();
                 }
             },
@@ -439,7 +446,8 @@ export default {
                 if(!(reg.test(value))){
                     callback(new Error("密码长度应为6到16，且包含字母与数字"));
                 } else {
-                    this.ruleForm.repassword = value
+                    this.ruleForm.repassword = value;
+                    this.boss.repassword = md5(value);
                     if(this.ruleForm.password !== value) {
                         callback(new Error("两次输入的密码不一致，请核对或重新输入！"));
                     } else {
@@ -459,9 +467,10 @@ export default {
                     callback(new Error("请输入真实姓名"));
                 } else {
                     this.ruleForm.realname = value;
+                    this.boss.realname = value;
                     if( this.ruleForm.idcard.length !== 0 && this.ruleForm.businesslicense.length) {
                         this.noClick3 = false;
-                        addUser.addBoss(this.ruleForm);
+                        addUser.addBoss(this.boss);
                         this.nextBoss();
                     }
                     callback();
@@ -477,9 +486,10 @@ export default {
                         callback(new Error("此身份证已经注册过了，请重新输入！有疑问请联系客服！"));
                     } else {
                         this.ruleForm.idcard = value;
+                        this.boss.idcard = value;
                         if( this.ruleForm.realname.length !== 0 && this.ruleForm.businesslicense.length) {
                             this.noClick3 = false;
-                            addUser.addBoss(this.ruleForm);
+                            addUser.addBoss(this.boss);
                             this.nextBoss();
                         }
                         callback();
@@ -487,7 +497,6 @@ export default {
                 }
             },
             checkBusinesslicense: (rule, value, callback) => {
-                console.log(value)
                 const businesslicenseArray = calculateMethods.listBusinesslicense();
                 const reg = /(^\d{15}$)|(^\d{18}$)/g;
                 if(!(reg.test(value))){
@@ -497,10 +506,10 @@ export default {
                         callback(new Error("此营业许可证号已经注册过了，请重新输入！有疑问？联系客服！"));
                     } else {
                         this.ruleForm.businesslicense = value;
+                        this.boss.businesslicense = value;
                         if( this.ruleForm.realname.length !== 0 && this.ruleForm.idcard.length) {
-                            console.log(this.ruleForm);
+                            addUser.addBoss(this.boss);
                             this.noClick3 = false;
-                            addUser.addBoss(this.ruleForm);
                             this.nextBoss();
                         }
                         callback();
@@ -512,7 +521,7 @@ export default {
             ruleForm: {
                 mobile: '',
                 vercode: '',
-                nickname: '',
+                username: '',
                 email: '',
                 password: '',
                 repassword: '',
@@ -523,7 +532,7 @@ export default {
             godrules: {
                 mobile: [{ validator: godMethods.checkMobile, trigger: 'blur' }],
                 vercode: [{ validator: godMethods.checkVercode, trigger: 'blur' }],
-                nickname: [{ validator: godMethods.checkNickname, trigger: 'blur' }],
+                username: [{ validator: godMethods.checkUsername, trigger: 'blur' }],
                 email: [{ validator: godMethods.checkEmail, trigger: 'blur' }],
                 password: [{ validator: godMethods.checkPassword, trigger: 'blur' }],
                 repassword: [{ validator: godMethods.checkRepassword, trigger: 'blur' }]
@@ -531,7 +540,7 @@ export default {
             bossrules: {
                 mobile: [{ validator: bossMethods.checkMobile, trigger: 'blur' }],
                 vercode: [{ validator: bossMethods.checkVercode, trigger: 'blur' }],
-                nickname: [{ validator: bossMethods.checkNickname, trigger: 'blur' }],
+                username: [{ validator: bossMethods.checkUsername, trigger: 'blur' }],
                 email: [{ validator: bossMethods.checkEmail, trigger: 'blur' }],
                 password: [{ validator: bossMethods.checkPassword, trigger: 'blur' }],
                 repassword: [{ validator: bossMethods.checkRepassword, trigger: 'blur' }],
@@ -540,18 +549,18 @@ export default {
                 businesslicense: [{ validator: bossMethods.checkBusinesslicense, trigger: 'blur' }]
             },
             activeName: 'first',
-            stepBoss: 1,
-            stepGod: 1,
             activeBoss: 0,
             activeGod: 0,
-            noClick1: true,
-            noClick2: true,
-            noClick3: true,
-            notClick1: true,
-            notClick2: true,
+            noClick1: false,
+            noClick2: false,
+            noClick3: false,
+            notClick1: false,
+            notClick2: false,
             existBossArray: [],
             existGodArray: [],
-            existUserArray: []
+            existUserArray: [],
+            god: {},
+            boss: {}
         };
     },
     methods: {
@@ -559,7 +568,7 @@ export default {
             this.ruleForm = {
                 mobile: '',
                 vercode: '',
-                nickname: '',
+                username: '',
                 email: '',
                 password: '',
                 repassword: '',
@@ -571,24 +580,10 @@ export default {
             this.god = {};
         },
         nextBoss() {
-            if (this.activeBoss++ > 2) {
-                this.activeBoss = 0;
-            }
-            if(this.stepBoss < 4) {
-                this.stepBoss++;
-            } else {
-                this.stepBoss = 1;
-            }
+            this.activeBoss++;
         },
         nextGod() {
-            if (this.activeGod++ > 2) {
-                this.activeGod = 0;
-            }
-            if(this.stepGod < 3) {
-                this.stepGod++;
-            } else {
-                this.stepGod = 1;
-            }
+            this.activeGod++;
         },
         complete() {
             this.$router.push({path:'/'});

@@ -18,8 +18,26 @@ const object = {
     },
 
     async addGod(data) {
-        const sql = 'insert into god(username, nickname, password, mobile, register_time, email) values(?, ?, ?, ?, ?, ?)';
+        const sql = 'insert into god(god_id, username, nickname, password, mobile, register_time, email) values(?, ?, ?, ?, ?, ?, ?)';
         await promisePool.query(sql, data);
+    },
+
+    async godLoginByEmail(data) {
+        const sql = 'select * from god where email=? and password=?';
+        const [rows, fields] = await promisePool.query(sql, data);
+        return rows;
+    },
+
+    async godLoginByMobile(data) {
+        const sql = 'select * from god where mobile=? and password=?';
+        const [rows, fields] = await promisePool.query(sql, data);
+        return rows;
+    },
+
+    async godLoginByUsername(data) {
+        const sql = 'select * from god where username=? and password=?';
+        const [rows, fields] = await promisePool.query(sql, data);
+        return rows;
     }
 
 };

@@ -8,8 +8,14 @@
                     <el-menu-item index="1-2">澳门</el-menu-item>
                 </el-submenu>
 
-                <el-menu-item index="2" class="f-left">请登录</el-menu-item>
-                <el-menu-item index="3" class="f-left">免费注册</el-menu-item>
+                <el-menu-item index="2" class="f-left">
+                    <router-link to="/login">请登陆</router-link>
+                </el-menu-item>
+
+                <el-menu-item index="3" class="f-left">
+                    <router-link to="/register">免费注册</router-link>
+                </el-menu-item>
+
                 <el-menu-item index="4" class="f-left">手机商城</el-menu-item>
 
                 <el-submenu index="5" class="f-right">
@@ -90,6 +96,14 @@
 
 #nav .f-right {
     float: right;
+}
+
+a {
+    text-decoration: none;
+}
+
+.router-link-active {
+    text-decoration: none;
 }
 
 </style>

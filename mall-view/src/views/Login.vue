@@ -9,16 +9,16 @@
 
                 <div class="login-box-username">
                     <i class="el-icon-user-solid"></i>
-                    <input v-model="form.name"></input>
+                    <input type="text" v-model="form.username" placeholder=" 手机/用户名/邮箱"></input>
                 </div>
 
                 <div class="login-box-password">
                     <i class="el-icon-lock"></i>
-                    <input v-model="form.name"></input>
+                    <input type="password" v-model="form.password" placeholder=" 密码"></input>
                 </div>
 
                 <div class="login-button">
-                    <button type="button" name="login-button">登陆</button>
+                    <button type="button" name="login-button" @click="login">登陆</button>
                 </div>
 
                 <div class="prompt">
@@ -42,6 +42,10 @@
 
 
 <script>
+import axios from 'axios'
+import md5 from 'md5'
+
+
 export default {
     name: 'login',
     data() {
@@ -53,7 +57,30 @@ export default {
         }
     },
     methods: {
-        
+        login() {
+            const username = this.form.username;
+            const password = md5(this.form.password);
+            if(username.length === 0 || password.length === 0) {
+                alert('账号密码均不能为空！')
+            } else {
+                const data = {
+                    username: username,
+                    password: password
+                }
+                axios({
+                    url: '/api/view/login',
+                    method: 'post',
+                    data: data
+                })
+                    .then(res => {
+                        if(res.data.msg === '登录成功') {
+                            this.$router.push({path:'/'});
+                        } else {
+                            alert(res.data.msg);
+                        }
+                    })
+            }
+        }
     }
 }
 </script>
