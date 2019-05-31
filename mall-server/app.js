@@ -3,6 +3,10 @@ const json = require('koa-json');
 const path = require('path'); 
 const bodyParser = require('koa-bodyparser');
 const app = new Koa();
+const formidable = require('koa2-formidable')
+
+
+app.use(formidable())
 
 
 const godRouter = require('./routes/god');

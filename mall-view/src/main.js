@@ -9,14 +9,18 @@ import './registerServiceWorker'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 //
 // Vue.use(BootstrapVue)
-
 import Element from 'element-ui'
+import VueSession from 'vue-session'
 import 'element-ui/lib/theme-chalk/index.css';
+
+var options = {
+    persist: true
+}
+
 
 Vue.use(Element)
 Vue.config.productionTip = false
-
-
+Vue.use(VueSession, options)
 
 
 new Vue({

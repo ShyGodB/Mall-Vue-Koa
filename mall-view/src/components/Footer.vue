@@ -32,7 +32,7 @@ export default {
     width: 100%;
     min-height: 100px;
     text-align: center;
-    margin: 20px auto;
+    margin: 20px auto 0;
     background: #FFFFFF;
 }
 .footer-line {

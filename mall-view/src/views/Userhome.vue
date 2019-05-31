@@ -7,10 +7,6 @@
           <main>
               <usermain></usermain>
           </main>
-
-          <footer>
-              <userfooter></userfooter>
-          </footer>
       </div>
 </template>
 
@@ -18,21 +14,26 @@
 <script>
 import UserNav from '../components/userhome/Navbar.vue'
 import UserMain from '../components/userhome/Main.vue'
-import UserFooter from '../components/Footer.vue'
 
 export default {
   name: 'userhome',
   components: {
       'usernav': UserNav,
-      'usermain': UserMain,
-      'userfooter': UserFooter
+      'usermain': UserMain
   }
 }
 </script>
 
 
 <style scoped>
+main {
+    width: 100%;
+    height: auto;
+}
 .userhome {
     margin: 0 40px;
+}
+footer {
+    margin-top: 100px;
 }
 </style>

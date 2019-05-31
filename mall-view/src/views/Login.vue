@@ -27,16 +27,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="login-footer">
-            <span>AAAAAA</span> |
-            <span>BBBBBB</span> |
-            <span>CCCCCC</span> |
-            <span>DDDDDD</span> |
-            <span>EEEEEE</span> |
-            <span>FFFFFF</span> |
-            <span>GGGGGG</span>
-        </div>
     </div>
 </template>
 
@@ -45,8 +35,8 @@
 import axios from 'axios'
 import md5 from 'md5'
 
-
 export default {
+    inject: ['reload'],
     name: 'login',
     data() {
         return {
@@ -74,10 +64,16 @@ export default {
                 })
                     .then(res => {
                         if(res.data.msg === '登录成功') {
-                            this.$router.push({path:'/'});
+                            this.$session.start()
+                            this.$session.set('userinfo', res.data.body);
+                            this.reload();
+                            this.$router.push('/');
                         } else {
                             alert(res.data.msg);
                         }
+                    })
+                    .then(error => {
+                        // console.log(error);
                     })
             }
         }

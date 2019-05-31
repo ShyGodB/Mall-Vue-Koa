@@ -32,17 +32,24 @@ router.post("/view/login", async (ctx) => {
     const row4 = await bossLoginMobilePromise;
     const row5 = await bossLoginUsernamePromise;
     const row6 = await bossLoginEmailPromise;
-    if( row1.length !== 0 ||
-        row2.length !== 0 ||
-        row3.length !== 0 ||
-        row4.length !== 0 ||
-        row5.length !== 0 ||
-        row6.length !== 0 ) {
-            ctx.body = { msg: '登录成功'};
-        } else {
-            ctx.body = { msg: '登录失败'};
+    const array = [row1, row2, row3, row4, row5, row6];
+    let onOff = false;
+    let data2 = null;
+    for(let i = 0; i < array.length; i++) {
+        if(array[i].length !== 0 ) {
+            onOff = true;
+            data2 = array[i][0];
+        } 
+    }
+    if(onOff === false) {
+        ctx.body = { msg: '登录失败'};
+    } else {
+        ctx.body = {
+            msg: '登录成功',
+            token: '已登陆',
+            body: data2
         }
-    
+    }
 });
 
 module.exports = router;

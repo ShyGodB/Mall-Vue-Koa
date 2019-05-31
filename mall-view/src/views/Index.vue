@@ -3,11 +3,6 @@
         <header>
             <!-- 主要的活动 -->
             <div class="top-active">
-                <active></active>
-            </div>
-
-            <!-- 搜索相关 -->
-            <div class="top-search">
                 <search></search>
             </div>
         </header>
@@ -19,15 +14,10 @@
             </div>
 
             <!-- 商品分类 -->
-            <div class="goods-class">
-                <cloth></cloth>
-                <electronic></electronic>
+            <div class="goods-index">
+                <goods></goods>
             </div>
         </main>
-
-        <footer>
-            <footer-main></footer-main>
-        </footer>
     </div>
 </template>
 
@@ -35,23 +25,26 @@
 // @ === /src
 
 import Active from '../components/index/header/Active.vue'
-import Search from '../components/index/header/Search.vue'
 import Mainbox from '../components/index/body/Main.vue'
-import Cloth from '../components/index/goods/clothes/Cloth.vue'
-import Electronic from '../components/index/goods/electronics/Electronic.vue'
+import Goods from '../components/index/goods/Goods.vue'
 import MainFooter from '../components/Footer.vue'
+import Search from '../components/Search.vue'
 
 export default {
+    inject: ['reload'],
     name: 'home',
     components: {
         'active': Active,
-        'search':Search,
         'mainbox': Mainbox,
-        'cloth': Cloth,
-        'electronic': Electronic,
-        'footer-main': MainFooter
+        'goods': Goods,
+        'footer-main': MainFooter,
+        'search': Search
+    },
+    beforeCreate() {
+        if (!this.$session.exists()) {
+            this.$router.push('/')
+        }
     }
-
 }
 </script>
 
@@ -59,5 +52,11 @@ export default {
 <style scoped>
 #index {
     margin: 0 40px;
+}
+main {
+    margin-top: 20px;
+}
+.goods-index {
+    margin-top: 40px;
 }
 </style>

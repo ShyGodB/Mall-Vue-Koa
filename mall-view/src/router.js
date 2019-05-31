@@ -36,9 +36,19 @@ export default new Router({
            component: () => import(/* webpackChunkName: "about" */ './views/Userinfo.vue')
         },
         {
-           path: '/search',
-           name: 'search',
-           component: () => import(/* webpackChunkName: "about" */ './views/Search.vue')
-        }
+           path: '/result',
+           name: 'result',
+           component: () => import(/* webpackChunkName: "about" */ './views/Result.vue')
+       },
+       {
+          path: '/bosshome',
+          name: 'bosshome',
+          component: () => import(/* webpackChunkName: "about" */ './views/Bosshome.vue')
+       },
+       {
+          path: '/shopcar',
+          name: 'shopcar',
+          component: () => import(/* webpackChunkName: "about" */ './views/Shopcar.vue')
+       }
     ]
 })

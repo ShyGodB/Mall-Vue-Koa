@@ -38,7 +38,40 @@ const object = {
         const sql = 'select * from boss where username=? and password=?';
         const [rows, fields] = await promisePool.query(sql, data);
         return rows;
-    }
+    },
+
+    async getBossByBossId(data) {
+        const sql = 'select * from boss where boss_id=?';
+        const [rows, fields] = await promisePool.query(sql, data);
+        return rows[0];
+    },
+
+    async addStore(data) {
+        const sql = 'insert into store(boss_id, name, type, nature) values(?, ?, ?, ?)';
+        await promisePool.query(sql, data);
+    },
+
+    async getStore(data) {
+        const sql = 'select * from store where boss_id=?';
+        const [rows, fields] = await promisePool.query(sql, data);
+        return rows;
+    },
+
+    async addGoodInfo(data) {
+        const sql = 'insert into good(store_id, name, description, brand) values(?, ?, ?, ?)';
+        await promisePool.query(sql, data);
+    },
+
+    async addGoodImg(data) {
+        const sql = 'insert into good(img_1, img_2, img_3, img_4, img_5, img_6) values(?, ?, ?, ?, ?, ?)';
+        await promisePool.query(sql, data);
+    },
+
+    async getGood(data) {
+        const sql = 'select * from good where store_id=?';
+        const [rows, fields] = await promisePool.query(sql, data);
+        return rows;
+1 }
 
 };
 

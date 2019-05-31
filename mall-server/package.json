@@ -10,12 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "formidable": "^1.2.1",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-ejs": "^4.2.0",
     "koa-json": "^2.0.2",
     "koa-multer": "^1.0.2",
     "koa-router": "^7.4.0",
+    "koa2-formidable": "^1.0.2",
     "md5": "^2.2.1",
     "mysql2": "^1.6.5",
     "nodemon": "^1.18.10"

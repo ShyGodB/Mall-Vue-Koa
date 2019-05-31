@@ -33,12 +33,14 @@ export default {
 
 
 <style scoped>
+.el-col-4, .el-col-20 {
+    min-height: 580px;
+    border: 1px solid #ff5000;
+}
 .main-box .main-box-left {
-    min-height: 600px;
-    background: skyblue;
+    height: 100%;
 }
 .main-box .main-box-right {
-    min-height: 600px;
-    background: blue;
+    min-height: 580px;
 }
 </style>
