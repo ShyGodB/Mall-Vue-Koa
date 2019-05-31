@@ -1,18 +1,22 @@
 <template>
-    <div id="content">
-        sdfadhufh
+    <div id="dash">
+        DASH
     </div>
 </template>
 
 
-
-
 <script>
 export default {
-    name: 'content',
+    name: 'dash',
+    data() {
+        return {
+
+        };
+    },
     methods: {
+
     }
-}
+};
 </script>
 
 

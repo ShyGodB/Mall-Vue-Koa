@@ -1,52 +1,96 @@
 <template>
     <div id="app">
-        <el-row :gutter="20">
-            <el-col :span="4" class="left">
-                <nav-left></nav-left>
-            </el-col>
+        <div class="hadLogin" v-if="hasUser === true">
+            <nav class="navbar el-col-4">
+                <navbar></navbar>
+            </nav>
 
-            <el-col :span="20" class="right">
-                <div class="right-top">
-                    <slider></slider>
+            <main class="content el-col-20">
+                <div class="content-top">
+                    <topbar></topbar>
                 </div>
 
-                <div class="right-content">
-                    <right-content></right-content>
+                <div class="content-end">
+                    <router-view v-if="isRouterAlive === true"></router-view>
                 </div>
-            </el-col>
-        </el-row>
+            </main>
+        </div>
+
+        <div class="notLogin" v-if="hasUser === false">
+            <login></login>
+        </div>
     </div>
 </template>
 
 
 <script>
-import Nav from './views/Nav.vue'
-import Slider from './views/Slider.vue'
-import Content from './views/Content.vue'
-
+import Navbar from './components/Nav.vue'
+import Topbar from './components/Topbar.vue'
+import Login  from './views/Login.vue'
 
 export default {
     name: 'app',
     components: {
-        'nav-left': Nav,
-        'slider': Slider,
-        'right-content': Content
+        'navbar': Navbar,
+        "topbar": Topbar,
+        'login': Login
+    },
+    provide() {
+        return {
+            reload: this.reload
+        }
+    },
+    data() {
+        return {
+            activeIndex: '1',
+            hasUser: false,
+            isRouterAlive: true
+        }
+    },
+    methods: {
+        reload() {
+            this.isRouterAlive = false;
+            if (this.$session.exists()) {
+                this.hasUser = true;
+            } else {
+                this.hasUser = false;
+            }
+            this.$nextTick(() => {
+                this.isRouterAlive = true;
+            })
+        },
+        handleSelect(key, keyPath) {
+            console.log(key, keyPath);
+        }
+    },
+    created() {
+        if (this.$session.exists()) {
+            this.hasUser = true;
+            this.$router.push('/dash');
+        } else {
+            this.hasUser = false;
+            this.$router.push('/login');
+        }
     }
 }
 </script>
 
 
 <style>
-#app {
-    min-height: 400px;
-    height: 100%;
+nav {
+    height: 800px;
 }
-.el-col-4 {
-    height: 100%;
-    min-height: 800px;
-    background: #404040;
+main {
+    height: 800px;
 }
-.right-content {
-    margin-top: 20px;
+.content-top {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    margin-bottom: 20px;
+    background: #ffffff;
+}
+.content-end {
+    margin-left: 20px;
 }
 </style>
