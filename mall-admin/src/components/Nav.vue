@@ -36,7 +36,12 @@
                 <span slot="title">客户管理</span>
             </el-menu-item>
 
-            <el-menu-item index="5" route="/black">
+            <el-menu-item index="5" route="/good">
+                <i class="el-icon-setting"></i>
+                <span slot="title">商品管理</span>
+            </el-menu-item>
+
+            <el-menu-item index="6" route="/black">
                 <i class="el-icon-setting"></i>
                 <span slot="title">小小黑屋</span>
             </el-menu-item>

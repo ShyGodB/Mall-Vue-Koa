@@ -54,34 +54,41 @@
 
 
 <script>
+import axios from 'axios'
+
 export default {
+    inject: ['reload'],
     name: 'boss',
     data() {
         return {
             search: '',
-            boss: [
-                {
-                    id: 1,
-                    boss_id: 'boss-13866666666',
-                    username: 'killer',
-                    mobile: '13866666666',
-                    email: 'killer@qq.com'
-                },
-                {
-                    id: 2,
-                    boss_id: 'boss-18888888888',
-                    username: 'god',
-                    mobile: '18888888888',
-                    email: 'god@qq.com'
-                }
-            ]
+            boss: []
         }
     },
     methods: {
         handleDelete(index, row) {
-            console.log(index, row);
+            const id = row.id;
+            axios({
+                url: '/api/admin/deleteBoss',
+                method: 'post',
+                data: {
+                    id: id
+                }
+            }).then(res => {
+                if(res.data.msg === '删除成功') {
+                    this.reload();
+                }
+            })
         }
     },
+    created() {
+        axios({
+            url: '/api/admin/List-ValuableBoss-All',
+            method: 'post',
+        }).then(res => {
+            this.boss = res.data;
+        })
+    }
 };
 </script>
 

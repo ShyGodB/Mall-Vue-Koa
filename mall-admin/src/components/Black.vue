@@ -9,7 +9,11 @@
                 <black-store></black-store>
             </el-tab-pane>
 
-            <el-tab-pane label="客户" name="third">
+            <el-tab-pane label="商品" name="third">
+                <black-good></black-good>
+            </el-tab-pane>
+
+            <el-tab-pane label="客户" name="four">
                 <black-god></black-god>
             </el-tab-pane>
         </el-tabs>
@@ -21,6 +25,7 @@
 import Boss from './black/Boss.vue'
 import Store from './black/Store.vue'
 import God from './black/God.vue'
+import Good from './black/Good.vue'
 
 
 export default {
@@ -28,7 +33,8 @@ export default {
     components: {
         'black-boss': Boss,
         'black-store': Store,
-        'black-god': God
+        'black-god': God,
+        'black-good': Good
     },
     data() {
         return {

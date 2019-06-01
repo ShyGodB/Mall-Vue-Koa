@@ -66,7 +66,6 @@ export default {
     created() {
         if (this.$session.exists()) {
             this.hasUser = true;
-            this.$router.push('/dash');
         } else {
             this.hasUser = false;
             this.$router.push('/login');

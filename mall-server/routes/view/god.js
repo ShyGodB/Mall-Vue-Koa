@@ -1,6 +1,6 @@
 const KoaRouter = require('koa-router');
 const router = new KoaRouter();
-const editGod = require('../lib/god');
+const editGod = require('../../lib/god');
 const md5 = require('md5');
 
 router.post("/view/addGod", async (ctx) => {

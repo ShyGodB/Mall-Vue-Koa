@@ -10,16 +10,23 @@ const pool = mysql.createPool({
 const promisePool = pool.promise();
 
 const object = {
-
+    /* 查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查 */
     async listAllBoss() {
         const sql = 'select * from boss';
         const [rows, fields] = await promisePool.query(sql);
         return rows;
     },
 
-    async addBoss(data) {
-        const sql = 'insert into boss(boss_id, username, nickname, password, email, mobile, register_time, realname, idcard, businesslicense) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        await promisePool.query(sql, data);
+    async listAllValuableBoss() {
+        const sql = 'select * from boss where deleted = 0';
+        const [rows, fields] = await promisePool.query(sql);
+        return rows;
+    },
+
+    async listAllDeletedBoss() {
+        const sql = 'select * from boss where deleted = 1';
+        const [rows, fields] = await promisePool.query(sql);
+        return rows;
     },
 
     async bossLoginByEmail(data) {
@@ -46,37 +53,23 @@ const object = {
         return rows[0];
     },
 
-    async addStore(data) {
-        const sql = 'insert into store(boss_id, name, type, nature) values(?, ?, ?, ?)';
+    /* 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增 */
+    async addBoss(data) {
+        const sql = 'insert into boss(boss_id, username, nickname, password, email, mobile, register_time, realname, idcard, businesslicense) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         await promisePool.query(sql, data);
     },
 
-    async getStore(data) {
-        const sql = 'select * from store where boss_id=?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
-    },
-
-    async addGoodInfo(data) {
-        const sql = 'insert into good(store_id, name, description, brand) values(?, ?, ?, ?)';
+    /* 改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改 */
+    async deleteBoss(data) {
+        const sql = 'update boss set deleted = 1 where id = ?';
         await promisePool.query(sql, data);
     },
 
-    async addGoodImg(data) {
-        const sql = 'insert into good(img_1, img_2, img_3, img_4, img_5, img_6) values(?, ?, ?, ?, ?, ?)';
+    async restoreBoss(data) {
+        const sql = 'update boss set deleted = 0 where id = ?';
         await promisePool.query(sql, data);
-    },
-
-    async getGood(data) {
-        const sql = 'select * from good where store_id=?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
-1 }
+    }
 
 };
 
 module.exports = object;
-
-
-
-

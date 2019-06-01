@@ -436,7 +436,7 @@ export default {
                         && this.ruleForm.password.length !== 0
                         && this.ruleForm.password.length !== 0) {
                             this.noClick2 = false;
-                            this.next();
+                            this.nextBoss();
                         }
                     callback();
                 }

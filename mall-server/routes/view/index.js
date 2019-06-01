@@ -1,7 +1,7 @@
 const KoaRouter = require('koa-router');
 const router = new KoaRouter();
-const editGod = require('../lib/god');
-const editBoss = require('../lib/boss');
+const editGod = require('../../lib/god');
+const editBoss = require('../../lib/boss');
 
 
 router.post("/view/listAllUser", async (ctx) => {
@@ -39,7 +39,7 @@ router.post("/view/login", async (ctx) => {
         if(array[i].length !== 0 ) {
             onOff = true;
             data2 = array[i][0];
-        } 
+        }
     }
     if(onOff === false) {
         ctx.body = { msg: '登录失败'};

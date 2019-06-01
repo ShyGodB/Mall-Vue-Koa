@@ -42,9 +42,7 @@
                     placeholder="输入关键字搜索/ username"/>
                 </template>
                 <template slot-scope="scope">
-                    <el-button
-                    size="mini"
-                    type="danger"
+                    <el-button size="mini" type="danger"
                     @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>
@@ -54,33 +52,40 @@
 
 
 <script>
+import axios from 'axios'
+
 export default {
+    inject: ['reload'],
     name: 'god',
     data() {
         return {
             search: '',
-            god: [
-                {
-                    id: 1,
-                    god_id: 'god-13866666666',
-                    username: 'killer',
-                    mobile: '13866666666',
-                    email: 'killer@qq.com'
-                },
-                {
-                    id: 2,
-                    god_id: 'god-18888888888',
-                    username: 'god',
-                    mobile: '18888888888',
-                    email: 'god@qq.com'
-                }
-            ]
+            god: []
         };
     },
     methods: {
         handleDelete(index, row) {
-            console.log(index, row);
+            const id = row.id;
+            axios({
+                url: '/api/admin/deleteGod',
+                method: 'post',
+                data: {
+                    id: id
+                }
+            }).then(res => {
+                if(res.data.msg === '删除成功') {
+                    this.reload();
+                }
+            })
         }
+    },
+    created() {
+        axios({
+            url: '/api/admin/List-ValuableGod-All',
+            method: 'post'
+        }).then(res => {
+            this.god = res.data;
+        })
     }
 };
 </script>

@@ -1,6 +1,6 @@
 const KoaRouter = require('koa-router');
 const router = new KoaRouter();
-const editBoss = require('../lib/boss');
+const editBoss = require('../../lib/boss');
 const multer = require('koa-multer');
 const upload = multer({ dest: 'public/uploads/' });
 const formidable = require('formidable');

@@ -1,7 +1,7 @@
 <template>
     <div id="store">
         <el-table
-        :data="store.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))"
+        :data="store.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
         style="width: 100%">
 
             <el-table-column
@@ -11,27 +11,33 @@
             </el-table-column>
 
             <el-table-column
-                label="store_id"
+                label="boss_id"
                 width="150"
-                prop="store_id">
+                prop="boss_id">
             </el-table-column>
 
             <el-table-column
-                label="username"
+                label="boss_name"
+                width="150"
+                prop="boss_name">
+            </el-table-column>
+
+            <el-table-column
+                label="name"
                 width="120"
-                prop="username">
+                prop="name">
             </el-table-column>
 
             <el-table-column
-                label="mobile"
+                label="type"
                 width="120"
-                prop="mobile">
+                prop="type">
             </el-table-column>
 
             <el-table-column
-                label="email"
+                label="nature"
                 width="200"
-                prop="email">
+                prop="nature">
             </el-table-column>
 
             <el-table-column align="left">
@@ -54,33 +60,40 @@
 
 
 <script>
+import axios from 'axios'
+
 export default {
+    inject: ['reload'],
     name: 'store',
     data() {
         return {
             search: '',
-            store: [
-                {
-                    id: 1,
-                    store_id: 'store-13866666666',
-                    username: 'killer',
-                    mobile: '13866666666',
-                    email: 'killer@qq.com'
-                },
-                {
-                    id: 2,
-                    store_id: 'store-18888888888',
-                    username: 'god',
-                    mobile: '18888888888',
-                    email: 'god@qq.com'
-                }
-            ]
+            store: []
         };
     },
     methods: {
         handleDelete(index, row) {
-            console.log(index, row);
+            const id = row.id;
+            axios({
+                url: '/api/admin/deleteStore',
+                method: 'post',
+                data: {
+                    id: id
+                }
+            }).then(res => {
+                if(res.data.msg === '删除成功') {
+                    this.reload();
+                }
+            })
         }
+    },
+    created() {
+        axios({
+            url: '/api/admin/List-ValuableStore-All',
+            method: 'post',
+        }).then(res => {
+            this.store = res.data;
+        })
     }
 };
 </script>

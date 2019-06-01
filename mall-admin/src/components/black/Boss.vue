@@ -44,7 +44,7 @@
                 <template slot-scope="scope">
                     <el-button
                     size="mini"
-                    type="danger"
+                    type="success"
                     @click="restore(scope.$index, scope.row)">恢复</el-button>
                 </template>
             </el-table-column>
@@ -54,34 +54,41 @@
 
 
 <script>
+import axios from 'axios'
+
 export default {
+    inject: ['reload'],
     name: 'boss',
     data() {
         return {
             search: '',
-            boss: [
-                {
-                    id: 1,
-                    boss_id: 'boss-13866666666',
-                    username: 'killer',
-                    mobile: '13866666666',
-                    email: 'killer@qq.com'
-                },
-                {
-                    id: 2,
-                    boss_id: 'boss-18888888888',
-                    username: 'god',
-                    mobile: '18888888888',
-                    email: 'god@qq.com'
-                }
-            ]
+            boss: []
         }
     },
     methods: {
         restore(index, row) {
-            console.log(index, row);
+            const id = row.id;
+            axios({
+                url: '/api/admin/restoreBoss',
+                method: 'post',
+                data: {
+                    id: id
+                }
+            }).then(res => {
+                if(res.data.msg === '恢复成功') {
+                    this.reload();
+                }
+            })
         }
     },
+    created() {
+        axios({
+            url: '/api/admin/List-DeletedBoss-All',
+            method: 'post',
+        }).then(res => {
+            this.boss = res.data;
+        })
+    }
 };
 </script>
 

@@ -12,11 +12,6 @@ export default new Router({
             name: 'login',
             component: () => import(/* webpackChunkName: "about" */ './views/Login.vue')
         },
-        // {
-        //     path: '/index',
-        //     name: 'index',
-        //     component: () => import(/* webpackChunkName: "about" */ './views/Index.vue')
-        // },
         {
             path: '/dash',
             name: 'dash',
@@ -36,6 +31,11 @@ export default new Router({
             path: '/store',
             name: 'store',
             component: () => import(/* webpackChunkName: "about" */ './components/Store.vue')
+        },
+        {
+            path: '/good',
+            name: 'good',
+            component: () => import(/* webpackChunkName: "about" */ './components/Good.vue')
         },
         {
             path: '/black',
