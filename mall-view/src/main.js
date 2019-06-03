@@ -12,6 +12,8 @@ import './registerServiceWorker'
 import Element from 'element-ui'
 import VueSession from 'vue-session'
 import 'element-ui/lib/theme-chalk/index.css';
+import VuePhotoZoomPro from 'vue-photo-zoom-pro'
+
 
 var options = {
     persist: true
@@ -19,6 +21,7 @@ var options = {
 
 
 Vue.use(Element)
+Vue.use(VuePhotoZoomPro)
 Vue.config.productionTip = false
 Vue.use(VueSession, options)
 

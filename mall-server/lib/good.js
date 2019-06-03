@@ -29,8 +29,14 @@ const object = {
         return rows;
     },
     
-    async getGood(data) {
+    async getGoodByStoreId(data) {
         const sql = 'select * from good where store_id=?';
+        const [rows, fields] = await promisePool.query(sql, data);
+        return rows;
+    },
+
+    async getGoodById(data) {
+        const sql = 'select * from good where id=?';
         const [rows, fields] = await promisePool.query(sql, data);
         return rows;
     },

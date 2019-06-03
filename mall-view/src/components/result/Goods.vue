@@ -18,7 +18,7 @@
                 </div>
             </el-col>
 
-            <el-col :span="18">
+            <el-col :span="19">
                 <div class="good">
                     <div class="sorting">
                         <span>
@@ -216,10 +216,16 @@ export default {
 
 
 <style scoped>
+#goods {
+    padding: 10px 20px;
+    border: 1px solid #aaaaaa;
+    border-radius: 20px;
+}
 #left-box {
-    margin-left: 20px;
+    margin: 0 20px 0 0;
     border: 1px solid #aaaaaa;
     border-radius: 10px;
+    margin-bottom: 80px;
 }
 .good {
     position: relative;
@@ -234,11 +240,19 @@ export default {
     height: 305px;
     color: #666;
     float: left;
-    margin-left: 30px;
-    margin-top: 20px;
+    padding: 10px 15px;
     position: relative;
-    background: #dddddd;
+    background: #ffffff;
     text-decoration: none;
+}
+.good a:hover {
+    background: #ffffff;
+    text-decoration: none;
+    width: 228px;
+    height: 303px;
+    border: 1px solid #bbbbbb;
+    border-radius: 10px;
+    box-shadow: #aaaaaa 5px 5px 10px;
 }
 .good-img {
     width: 200px;
@@ -293,24 +307,28 @@ export default {
 }
 .sorting {
     width: 100%;
-    height: 30px;
-    line-height: 24px;
-    padding: 5px 3px 0 5px;
+    height: 36px;
+    line-height: 36px;
+    padding: 5px;
+    margin-bottom: 10px;
+    background: #eeeeee;
 }
 .sorting>span {
     display: inline-block;
-    padding: 5px;
     color: #aaaaaa;
     border: 1px solid #aaaaaa;
     cursor: pointer;
+    padding: 0 5px;
 }
 .sorting>div {
     display: inline-block;
-    padding: 5px;
     float: right;
     color: #aaaaaa;
     border: 1px solid #aaaaaa;
-    margin-right: 10px
+    padding: 0 5px;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
 }
 strong {
     color: #ff5000;

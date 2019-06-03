@@ -1,6 +1,7 @@
 <template>
     <div id="boss">
         <el-table
+        size="medium"
         :data="boss.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))"
         style="width: 100%">
 
@@ -77,6 +78,11 @@ export default {
             }).then(res => {
                 if(res.data.msg === '删除成功') {
                     this.reload();
+                    this.$message({
+                        showClose: true,
+                        message: res.data.msg,
+                        type: 'success'
+                    });
                 }
             })
         }

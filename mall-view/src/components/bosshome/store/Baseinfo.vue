@@ -53,7 +53,7 @@ export default {
             console.log(tab, event);
         }
     },
-    mounted() {
+    created() {
         const session = this.$session.getAll();
         if(session !== {} && session.userinfo.boss_id) {
             axios({
@@ -62,7 +62,14 @@ export default {
                 data: { boss_id : session.userinfo.boss_id}
             })
                 .then(res => {
+                    console.log(res.data)
                     if(res.status === 200) {
+                        if(res.data.msg === '尚未创建店铺！') {
+                            this.$message({
+                                showClose: true,
+                                message: res.data.msg
+                            });
+                        }
                         this.storeinfo = res.data;
                     }
                 })

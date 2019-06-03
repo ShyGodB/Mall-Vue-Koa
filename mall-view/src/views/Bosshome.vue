@@ -10,7 +10,7 @@
             </el-tab-pane>
 
             <el-tab-pane label="店铺管理">
-                <manage></manage>
+                <store></store>
             </el-tab-pane>
 
             <el-tab-pane label="商品管理">
@@ -24,7 +24,7 @@
 <script>
 import Bossinfo from '../components/bosshome/Bossinfo.vue'
 import Create from '../components/bosshome/Create.vue'
-import Manage from '../components/bosshome/Manage.vue'
+import Store from '../components/bosshome/Store.vue'
 import Goods from '../components/bosshome/Goods.vue'
 
 export default {
@@ -32,7 +32,7 @@ export default {
     components: {
         'boss-info': Bossinfo,
         'create': Create,
-        'manage': Manage,
+        'store': Store,
         'goods': Goods
     }
 }

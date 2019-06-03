@@ -64,6 +64,7 @@ export default {
                     if(session !== {} && session.userinfo.boss_id) {
                         const data = {
                             boss_id: session.userinfo.boss_id,
+                            boss_name: session.userinfo.username,
                             name: this.ruleForm.name,
                             type: this.ruleForm.type,
                             nature: this.ruleForm.nature
@@ -75,11 +76,29 @@ export default {
                         })
                             .then(res => {
                                 if(res.status === 200) {
-                                    alert(res.data.msg);
+                                    if(res.data.msg === '恭喜你，创建成功！') {
+                                        this.$message({
+                                            showClose: true,
+                                            message: res.data.msg,
+                                            type: 'success'
+                                        });
+                                    } else {
+                                        this.$message({
+                                            showClose: true,
+                                            message: res.data.msg,
+                                            type: 'error'
+                                        });
+                                    }
+
                                 }
+
                             })
                     } else {
-                        alert('尚未登陆/或权限不足，不能创建店铺！');
+                        this.$message({
+                            showClose: true,
+                            message: '尚未登陆/或权限不足，不能创建店铺！',
+                            type: 'error'
+                        });
                     }
 
                 } else {
@@ -91,6 +110,9 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         }
+    },
+    created() {
+        console.log(this.$session.getAll());
     }
 }
 </script>

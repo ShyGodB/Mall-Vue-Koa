@@ -14,14 +14,14 @@
             <el-table-column
             show-overflow-tooltip
             label="商品"
-            prop="good">
+            prop="description">
             </el-table-column>
 
             <el-table-column
             show-overflow-tooltip
             width="80"
             label="单价"
-            prop="price">
+            prop="new_price">
             </el-table-column>
 
             <el-table-column
@@ -48,11 +48,7 @@
                     <el-button
                       size="mini"
                       type="danger"
-                      @click="handleEdit(scope.$index, scope.row)">删除</el-button>
-                    <el-button
-                      size="mini"
-                      type="success"
-                      @click="handleDelete(scope.$index, scope.row)">添加关注</el-button>
+                      @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -73,6 +69,8 @@
 
 
 <script>
+import axios from 'axios'
+
 export default {
     name: 'allgood',
     data() {
@@ -82,39 +80,11 @@ export default {
             checkedPart: false,
             number: 0,
             allpay: 0,
-            goods: [
-                {
-                    good: '美国halo导汗带排汗带运动健身束发头带硅胶跑步骑行 一体型--LOGO版',
-                    price: 87.90,
-                    num: 1,
-                    subtotal: 87.90,
-                },
-                {
-                    good: '金士顿（Kingston）u盘闪存盘32g64g128g系统优盘商务办公车载高速刻字U盘USB3.0',
-                    price: 134.90,
-                    num: 2,
-                    subtotal: 269.80,
-                },
-                {
-                    good: '金士顿（Kingston）u盘闪存盘32g64g128g系统优盘商务办公车载高速刻字U盘USB2.0',
-                    price: 134.90,
-                    num: 2,
-                    subtotal: 269.80,
-                }
-            ],
+            goods: [],
             multipleSelection: []
         }
     },
     methods: {
-        toggleSelection(rows) {
-            if (rows) {
-                rows.forEach(row => {
-                    this.$refs.multipleTable.toggleRowSelection(row);
-                });
-            } else {
-                this.$refs.multipleTable.clearSelection();
-            }
-        },
         handleSelectionChange(val) {
             if(val.length === this.goods.length) {
                 this.checkedALl = true;
@@ -129,15 +99,67 @@ export default {
             let m = 0;
             for(let i = 0; i < val.length; i++) {
                 this.number += val[i].num;
-                m += val[i].subtotal;
+                m += Number(val[i].subtotal);
             }
             this.allpay = m.toFixed(2);
         },
         handleChange(index, row) {
-            this.goods[index].subtotal = Number((row.price * row.num).toFixed(2));
+            console.log(index, row);
+            this.goods[index].subtotal = Number((row.new_price * row.num).toFixed(2));
             if(this.checkedALl === true || this.checked === true) {
                 this.handleSelectionChange(this.goods);
             }
+            // 事实更新数据表中的数据
+            const id = row.id;
+            const num = row.num;
+            const subtotal = row.subtotal;
+            axios({
+                url: '/api/view/update-good-info-in-car',
+                method: 'post',
+                data: {
+                    id: id,
+                    num: num,
+                    subtotal: subtotal
+                }
+            }).then(res => {
+                console.log(res.data);
+                if(res.status !== 200) {
+                    this.$message({
+                        showClose: true,
+                        message: '更新数据出错，请重试！',
+                        type: 'error'
+                    });
+                }
+            })
+        },
+        handleDelete(index, row) {
+            const id = row.id;
+            this.$confirm('此操作将永久移除该商品, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+                axios({
+                    url: '/api/view/delete-good-from-car',
+                    method: 'post',
+                    data: {
+                        id: id
+                    }
+                }).then(res => {
+                    if(res.status === 200) {
+                        this.goods.splice(index, 1);
+                        this.$message({
+                          type: 'success',
+                          message: res.data.msg
+                        });
+                    }
+                })
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '已取消删除'
+              });
+            });
         },
         isAllGood() {
             if(this.checked === true) {
@@ -148,6 +170,29 @@ export default {
         },
         goPay() {
             alert('此功能尚未完善！')
+        }
+    },
+    created() {
+        const session = this.$session.getAll();
+        if(session.userinfo !== {} && session.userinfo.god_id) {
+            const god_id = session.userinfo.god_id;
+            axios({
+                url: '/api/view/list-goods-from-car',
+                method: 'post',
+                data: {
+                    god_id: god_id
+                }
+            }).then(res => {
+                if(res.status === 200) {
+                    this.goods = res.data;
+                }
+            })
+        } else {
+            this.$message({
+                showClose: true,
+                message: '当前账号为商家账号，请切换！',
+                type: 'error'
+            });
         }
     }
 }

@@ -144,6 +144,7 @@ export default {
 .search-header {
     float: left;
     padding: 0 40px;
+    margin-bottom: 10px;
 }
 .choices {
     float: left;
@@ -156,6 +157,7 @@ export default {
 .search-body {
     height: auto;
     float: left;
+    padding: 0 40px;
 }
 footer {
     margin-top: 2040px;

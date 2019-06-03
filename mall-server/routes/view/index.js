@@ -2,6 +2,9 @@ const KoaRouter = require('koa-router');
 const router = new KoaRouter();
 const editGod = require('../../lib/god');
 const editBoss = require('../../lib/boss');
+const editGood = require('../../lib/good');
+const editCar = require('../../lib/car');
+
 
 
 router.post("/view/listAllUser", async (ctx) => {
@@ -50,6 +53,17 @@ router.post("/view/login", async (ctx) => {
             body: data2
         }
     }
+});
+
+router.post("/view/get-good", async (ctx) => {
+    const id = ctx.request.body.id;
+    ctx.body = await editGood.getGoodById(id);
+});
+
+router.post("/view/list-goods-from-car", async (ctx) => {
+    const god_id = ctx.request.body.god_id;
+    const rows = await editCar.listByGod_id(god_id);
+    ctx.body = rows;
 });
 
 module.exports = router;

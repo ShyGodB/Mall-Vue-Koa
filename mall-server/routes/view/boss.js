@@ -1,6 +1,8 @@
 const KoaRouter = require('koa-router');
 const router = new KoaRouter();
 const editBoss = require('../../lib/boss');
+const editStore = require('../../lib/store');
+const editGood = require('../../lib/good');
 const multer = require('koa-multer');
 const upload = multer({ dest: 'public/uploads/' });
 const formidable = require('formidable');
@@ -31,20 +33,20 @@ router.post("/view/getbossinfo", async (ctx) => {
 router.post("/view/addstore", async (ctx) => {
     const data = ctx.request.body;
     const boss_id = data.boss_id;
-    const rows = await editBoss.getStore(boss_id);
+    const boss_name = data.boss_name;
+    const rows = await editStore.getStore(boss_id);
     if(rows.length !== 0) {
         ctx.body = { msg: '创建失败，当前只允许店主拥有一个店铺，有疑问请咨询工作人员！' };
     } else {
-        const data1 = [data.boss_id, data.name, data.type, data.nature];
-        await editBoss.addStore(data1);
+        const data1 = [boss_id, boss_name, data.name, data.type, data.nature];
+        await editStore.addStore(data1);
         ctx.body = { msg: '恭喜你，创建成功！' };
     }
 });
 
 router.post("/view/getstore", async (ctx) => {
-    const data = ctx.request.body;
-    const boss_id = data.boss_id;
-    const rows = await editBoss.getStore(boss_id);
+    const boss_id = ctx.request.body.boss_id;
+    const rows = await editStore.getStore(boss_id);
     if (rows.length === 0) {
         ctx.body = { msg: '尚未创建店铺！' };
     } else {
@@ -63,7 +65,7 @@ router.post("/view/addgoodinfo",  async (ctx) => {
 
 router.post("/view/getgood", async (ctx) => {
     const data = ctx.request.body.store_id;
-    const rows = await editBoss.getGood(data);
+    const rows = await editGood.getGoodByStoreId(data);
     ctx.body = rows;
 });
 

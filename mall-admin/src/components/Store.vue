@@ -83,6 +83,11 @@ export default {
             }).then(res => {
                 if(res.data.msg === '删除成功') {
                     this.reload();
+                    this.$message({
+                        showClose: true,
+                        message: res.data.msg,
+                        type: 'success'
+                    });
                 }
             })
         }

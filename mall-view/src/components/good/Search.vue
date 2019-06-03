@@ -32,7 +32,7 @@
                     <div class="car-buy">
                         <a href="/shopcar">
                             <span>我的购物车</span>
-                            <img id="buycar" src="../../public/icon/buy.svg" alt="">
+                            <img id="buycar" src="../../../public/icon/buy.svg" alt="">
                         </a>
                     </div>
                 </div>
@@ -61,7 +61,7 @@ export default {
     float: left;
     height: 90px;
     background-repeat: no-repeat;
-    background-image: url(../../public/img/jd.png);
+    background-image: url(../../../public/img/jd.png);
     background-size: 90% 90%;
 }
 
@@ -112,7 +112,7 @@ export default {
     padding: 25px 20px 25px 20px;
 }
 .search-right a {
-    width: 64%;
+    width: 66%;
     display: block;
     height: 34px;
     line-height: 34px;

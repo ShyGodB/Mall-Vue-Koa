@@ -20,7 +20,12 @@
                     </div>
                 </el-col>
 
-                <el-col :span="2"><div class="grid-content bg-purple"></div></el-col>
+                <el-col :span="2">
+                    <div class="brand-more">
+                        <span>更多</span>
+                        <i class="el-icon-plus"></i>
+                    </div>
+                </el-col>
             </el-row>
         </div>
 
@@ -202,9 +207,9 @@ export default {
 
 <style scoped>
 #choose {
-    padding: 5px 10px;
     border: 1px solid #eeeeee;
     border-radius: 10px;
+    margin-bottom: 20px;
 }
 .brand {
     height: 50px;
@@ -217,13 +222,34 @@ li {
     list-style-type: none;
     display: inline-block;
     float: left;
-    margin-left: 20px;
+    margin-left: 15px;
 }
 .brand li {
     border: 1px solid #dddddd;
     padding: 2px;
 }
 a {
+    color: #005aa0;
     text-decoration: none;
+    list-style: none;
+}
+.brand, .type, .capacity-disk, .capacity-memory, .CPU {
+    border-bottom: 1px solid #eeeeee;
+    color: #000000;
+    font-size: 18px;
+    padding: 5px 10px;
+}
+.conditions {
+    color: #000000;
+    font-size: 18px;
+    padding: 5px 10px;
+}
+.brand-more {
+    background: #aaaaaa;
+    padding: 1px 6px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 20px;
 }
 </style>

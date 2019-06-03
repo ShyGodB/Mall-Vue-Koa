@@ -12,7 +12,8 @@
             <router-link to="/userinfo">用户信息</router-link> |
             <router-link to="/result">搜索结果</router-link> |
             <router-link to="/shopcar">购物车</router-link> |
-            <router-link to="/bosshome">店主之家</router-link>
+            <router-link to="/bosshome">店主之家</router-link> |
+            <router-link to="/good/7">商品</router-link> |
         </div>
         <router-view v-if="user.isRouterAlive === true"></router-view>
 

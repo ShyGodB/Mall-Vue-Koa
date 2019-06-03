@@ -77,6 +77,11 @@ export default {
             }).then(res => {
                 if(res.data.msg === '恢复成功') {
                     this.reload();
+                    this.$message({
+                        showClose: true,
+                        message: res.data.msg,
+                        type: 'success'
+                    });
                 }
             })
         }

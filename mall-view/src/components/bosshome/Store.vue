@@ -19,8 +19,8 @@
 
 
 <script>
-import Baseinfo from './manage/Baseinfo'
-import Goodsaddinfo from './manage/Goodsaddinfo'
+import Baseinfo from './store/Baseinfo'
+import Goodsaddinfo from './store/Goodsaddinfo'
 
 
 export default {

@@ -38,7 +38,7 @@ const object = {
 
     /* 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增 */
     async addStore(data) {
-        const sql = 'insert into store(boss_id, name, type, nature) values(?, ?, ?, ?)';
+        const sql = 'insert into store(boss_id, boss_name, name, type, nature) values(?, ?, ?, ?, ?)';
         await promisePool.query(sql, data);
     },
 

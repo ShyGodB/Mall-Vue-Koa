@@ -1,6 +1,6 @@
 <template>
     <div class="good">
-        <a href="#" v-for="item in goods" :key="item.name">
+        <a :href="'/good/' + (index+1)" v-for="(item, index) in goods" :key="index">
             <div class="good-img">
                 <img :src="item.img" alt="">
             </div>
@@ -53,8 +53,8 @@ export default {
                     price: '1799.00'
                 },
                 {
-                    name: '未来人类(Terrans Force)T700 17.3英寸高性能游戏本(i7-8750H GTX1070 16G 512G PCIe*4+1T FHD144Hz WIN10)',
-                    img: 'https://img11.360buyimg.com/jdcms/s300x300_jfs/t1/970/13/14372/60610/5bda56fcE64388577/87a6979e89b3e293.jpg!q90!cc_170x170.webp',
+                    name: 'Redmi K20 Pro  骁龙855旗舰处理器 / 索尼4800万超广角三摄 / 前置2000万升降式相机 / 6.39"AMOLED全面屏 / 4000mAh超长续航 / 8层石墨立体散热 / 第七代屏下指纹解锁 / 多功能NFC',
+                    img: '//img12.360buyimg.com/n1/jfs/t1/82391/12/651/586115/5cee3153E630146b1/776fa700e3020621.png',
                     price: '12499.00'
                 },
                 {

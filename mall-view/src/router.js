@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from './views/Index.vue'
-import Login from './views/Login.vue'
-import Userhome from './views/Userhome.vue'
 
 Vue.use(Router)
 
@@ -13,12 +10,12 @@ export default new Router({
         {
             path: '/',
             name: 'index',
-            component: Index
+            component: () => import(/* webpackChunkName: "about" */ './views/Index.vue')
         },
         {
             path: '/login',
             name: 'login',
-            component: Login
+            component: () => import(/* webpackChunkName: "about" */ './views/Login.vue')
         },
         {
           path: '/register',
@@ -49,6 +46,11 @@ export default new Router({
           path: '/shopcar',
           name: 'shopcar',
           component: () => import(/* webpackChunkName: "about" */ './views/Shopcar.vue')
-       }
+      },
+      {
+         path: '/good/:id',
+         name: 'good',
+         component: () => import(/* webpackChunkName: "about" */ './views/Good.vue')
+      }
     ]
 })
