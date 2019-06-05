@@ -55,7 +55,6 @@
 import axios from 'axios'
 
 export default {
-    inject: ['reload'],
     name: 'god',
     data() {
         return {
@@ -74,7 +73,7 @@ export default {
                 }
             }).then(res => {
                 if(res.data.msg === '删除成功') {
-                    this.reload();
+                    this.god.splice(index, 1);
                     this.$message({
                         showClose: true,
                         message: res.data.msg,

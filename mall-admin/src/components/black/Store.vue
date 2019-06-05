@@ -63,7 +63,6 @@
 import axios from 'axios'
 
 export default {
-    inject: ['reload'],
     name: 'store',
     data() {
         return {
@@ -82,7 +81,7 @@ export default {
                 }
             }).then(res => {
                 if(res.data.msg === '恢复成功') {
-                    this.reload();
+                    this.store.splice(index, 1);
                     this.$message({
                         showClose: true,
                         message: res.data.msg,

@@ -4,8 +4,30 @@ const editBoss = require('../../lib/boss');
 const editStore = require('../../lib/store');
 const editGood = require('../../lib/good');
 const multer = require('koa-multer');
-const upload = multer({ dest: 'public/uploads/' });
-const formidable = require('formidable');
+
+const storage = multer.diskStorage({
+    destination(req, file, cb) {
+        cb(null, '../mall-view/src/assets/bossAvatar')
+    },
+    filename(req, file, cb) {
+        const name = file.originalname;
+        const extension = name.substring(name.length - 4);
+        cb(null, 'boss-' + Date.now() + extension);
+    }
+})
+
+const upload = multer({ storage: storage })
+
+router.post("/view/update-boss-avatar/:id", upload.single('avatar'), async (ctx) => {
+    const id = ctx.params.id;
+    const path = ctx.req.file.path;
+    const data = [path, id];
+    await editBoss.updateBossAvatar(data);
+    ctx.body = {
+        avatar_url: path
+    };
+});
+
 
 router.post("/view/addBoss", async (ctx) => {
     const data = ctx.request.body;
@@ -23,11 +45,6 @@ router.post("/view/addBoss", async (ctx) => {
     const data1 = [boosId, username, nickname, password, email, mobile, registerTime, realname, idcard, businesslicense];
     await editBoss.addBoss(data1);
     ctx.body = { msg: '添加店主成功' };
-});
-
-router.post("/view/getbossinfo", async (ctx) => {
-    const boss_id = ctx.request.body.boss_id;
-    ctx.body = await editBoss.getBossByBossId(boss_id);
 });
 
 router.post("/view/addstore", async (ctx) => {
@@ -54,20 +71,73 @@ router.post("/view/getstore", async (ctx) => {
     }
 });
 
-router.post("/view/addgoodinfo",  async (ctx) => {
-    const data = ctx.request.body;
-    const name = data.name;
-    const price = data.price;
-    const description = data.description;
-    const brand = data.brand;
-    ctx.body = {msg: 'ok'};
-});
-
 router.post("/view/getgood", async (ctx) => {
     const data = ctx.request.body.store_id;
     const rows = await editGood.getGoodByStoreId(data);
     ctx.body = rows;
 });
 
+router.post("/view/update-boss-info", async (ctx) => {
+    const data = ctx.request.body;
+    const token = data.token;
+    const value = data.value;
+    const id = data.id;
+    const data1 = [value, id];
+    console.log(data1);
+    
+    switch(token) {
+        case 'nickname':
+            await editBoss.updateBossNickname(data1);
+            break;
+        case 'gender':
+            await editBoss.updateBossGender(data1);
+            break;
+        case 'birthday':
+            await editBoss.updateBossBirthday(data1);
+            break;
+        case 'email':
+            await editBoss.updateBossEmail(data1);
+            break;
+        case 'mobile':
+            await editBoss.updateBossMobile(data1);
+            break;
+        case 'qq':
+            await editBoss.updateBossQQ(data1);
+            break;
+        case 'wechat':
+            await editBoss.updateBossWechat(data1);
+            break;
+        case 'weibo':
+            await editBoss.updateBossWeibo(data1);
+            break;
+        case 'bio':
+            await editBoss.updateBossBio(data1);
+            break;
+
+    }
+    
+    ctx.body = {msg: '修改成功'};
+});
+
+router.post("/view/update-boss-password", async (ctx) => {
+    const data = ctx.request.body;
+    const token = data.token;
+    const id = data.id;
+    const password = data.password
+    const data1 = [password, id]
+    switch (token) {
+        case '验证':
+            const rows = await editBoss.checkPassword(data1);
+            ctx.body = rows;
+            break;
+        case '修改':
+            await editBoss.updatePassword(data1);
+            ctx.body = { msg: '修改密码成功' };
+            break;
+        default:
+            ctx.body = { msg: '请求失败' };
+            break;
+    }
+});
 
 module.exports = router;

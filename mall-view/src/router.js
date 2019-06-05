@@ -51,6 +51,11 @@ export default new Router({
          path: '/good/:id',
          name: 'good',
          component: () => import(/* webpackChunkName: "about" */ './views/Good.vue')
-      }
+     },
+     {
+        path: '/404',
+        name: '404',
+        component: () => import(/* webpackChunkName: "about" */ './views/404.vue')
+     }
     ]
 })

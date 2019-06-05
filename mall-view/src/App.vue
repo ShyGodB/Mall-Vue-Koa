@@ -4,17 +4,6 @@
             <mainnav v-bind:user="user"></mainnav>
         </div>
 
-        <div class="router-view" style="margin-left:40px;">
-            <router-link to="/"> 主页</router-link> |
-            <router-link to="/register">注册</router-link> |
-            <router-link to="/login">登陆</router-link> |
-            <router-link to="/userhome">用户</router-link> |
-            <router-link to="/userinfo">用户信息</router-link> |
-            <router-link to="/result">搜索结果</router-link> |
-            <router-link to="/shopcar">购物车</router-link> |
-            <router-link to="/bosshome">店主之家</router-link> |
-            <router-link to="/good/7">商品</router-link> |
-        </div>
         <router-view v-if="user.isRouterAlive === true"></router-view>
 
         <footer>
@@ -54,18 +43,11 @@ export default {
             if (this.$session.exists()) {
                 this.user.hasUser = true;
             } else {
-                this.hasUser = false;
+                this.user.hasUser = false;
             }
             this.$nextTick(() => {
                 this.user.isRouterAlive = true;
             })
-        }
-    },
-    created() {
-        if (this.$session.exists()) {
-            this.user.hasUser = true;
-        } else {
-            this.user.hasUser = false;
         }
     }
 }
@@ -73,4 +55,7 @@ export default {
 
 
 <style scoped>
+#mainnav {
+    margin-bottom: 20px;
+}
 </style>

@@ -65,6 +65,7 @@ export default {
                     .then(res => {
                         if(res.data.msg === '登录成功') {
                             this.$session.start()
+                            this.$session.set('token', res.data.token);
                             this.$session.set('userinfo', res.data.body);
                             this.reload();
                             this.$router.push('/');

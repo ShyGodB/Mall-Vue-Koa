@@ -18,9 +18,9 @@
 
 
 <script>
-import Personal from './Personal.vue'
-import Security from './Security.vue'
-import Goodaddress from './Goodaddress.vue'
+import Personal from './main/Personal.vue'
+import Security from './main/Security.vue'
+import Goodaddress from './main/Goodaddress.vue'
 
 export default {
     name: 'user-main',

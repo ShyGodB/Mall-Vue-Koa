@@ -14,7 +14,7 @@ const object = {
     async listAllGood() {
         const sql = 'select * from good';
         const [rows, fields] = await promisePool.query(sql);
-        return rows;
+        return rows.length;
     },
 
     async listAllValuableGood() {
@@ -42,13 +42,8 @@ const object = {
     },
 
     /* 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增 */
-    async addGoodInfo(data) {
-        const sql = 'insert into good(store_id, name, description, brand) values(?, ?, ?, ?)';
-        await promisePool.query(sql, data);
-    },
-
-    async addGoodImg(data) {
-        const sql = 'insert into good(img_1, img_2, img_3, img_4, img_5, img_6) values(?, ?, ?, ?, ?, ?)';
+    async addGood(data) {
+        const sql = 'insert into good(store_id, store_name, boss_id, boss_name, name, new_price, description, brand, img_1, img_2, img_3, img_4, img_5) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         await promisePool.query(sql, data);
     },
 

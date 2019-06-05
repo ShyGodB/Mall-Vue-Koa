@@ -20,6 +20,11 @@ export default {
     components: {
         'usernav': UserNav,
         'usermain': UserMain
+    },
+    created() {
+        if(this.$session.getAll().token !== 'god') {
+            this.$router.push('/404');
+        }
     }
 }
 </script>

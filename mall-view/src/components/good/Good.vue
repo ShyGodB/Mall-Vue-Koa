@@ -13,7 +13,7 @@
             </div>
 
             <div class="img-small">
-                <a v-for="(item, index) in imgList" :key="item.url">
+                <a v-for="(item, index) in imgList" :key="index">
                     <img :src="item.url" @mouseover="overSmallActive(index)" alt="加载失败">
                 </a>
             </div>
@@ -58,13 +58,7 @@
         </div>
     </div>
 </template>
-<!-- // smallImg: [
-//     {url: 'https://img12.360buyimg.com/n5/jfs/t1/82391/12/651/586115/5cee3153E630146b1/776fa700e3020621.png'},
-//     {url: 'https://img12.360buyimg.com/n5/jfs/t1/61237/14/603/43715/5cecee05Ee0c5cb89/f187e8f83b1231bd.jpg'},
-//     {url: 'https://img12.360buyimg.com/n5/jfs/t1/38668/40/7604/43422/5cecee05Eb56946f4/c098370852db6622.jpg'},
-//     {url: 'https://img12.360buyimg.com/n5/jfs/t1/64905/19/619/22965/5cecee06E967c937f/55c316d1fe78a465.jpg'},
-//     {url: 'https://img12.360buyimg.com/n5/jfs/t1/44149/1/5287/38481/5cecee06Ee24d002d/0b8fac35568c2d72.jpg'}
-// ], -->
+
 
 <script>
 import axios from 'axios'
@@ -155,14 +149,22 @@ export default {
             }
         }).then(res => {
             const data = res.data[0];
-            this.imgList = [
-                {url: data.img_1},
-                {url: data.img_2},
-                {url: data.img_3},
-                {url: data.img_4},
-                {url: data.img_5}
-            ];
-            this.good = data;
+            if(data !== undefined) {
+                this.imgList = [
+                    {url: require('../../' + data.img_1.substring(17, 45))},
+                    {url: require('../../' + data.img_2.substring(17, 45))},
+                    {url: require('../../' + data.img_3.substring(17, 45))},
+                    {url: require('../../' + data.img_4.substring(17, 45))},
+                    {url: require('../../' + data.img_5.substring(17, 45))}
+                ];
+                this.good = data
+            } else {
+                this.$message({
+                    showClose: 'true',
+                    message: '暂无商品！',
+                    type: 'warning'
+                })
+            }
         })
     }
 }

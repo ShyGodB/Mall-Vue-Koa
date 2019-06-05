@@ -5,13 +5,13 @@
                 <manage-baseinfo></manage-baseinfo>
             </el-tab-pane>
 
-            <el-tab-pane label="商品添加" name="second">
+            <!-- <el-tab-pane label="商品添加" name="second">
                 <goods-addinfo></goods-addinfo>
             </el-tab-pane>
 
             <el-tab-pane label="角色管理" name="third">
 
-            </el-tab-pane>
+            </el-tab-pane> -->
             <!-- <el-tab-pane label="定时任务补偿" name="fourth"></el-tab-pane> -->
         </el-tabs>
     </div>
@@ -20,14 +20,12 @@
 
 <script>
 import Baseinfo from './store/Baseinfo'
-import Goodsaddinfo from './store/Goodsaddinfo'
 
 
 export default {
     name: 'manage',
     components: {
-        'manage-baseinfo': Baseinfo,
-        'goods-addinfo': Goodsaddinfo
+        'manage-baseinfo': Baseinfo
     },
     data() {
         return {

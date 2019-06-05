@@ -61,7 +61,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     const session = this.$session.getAll();
-                    if(session !== {} && session.userinfo.boss_id) {
+                    if(session.token === 'boss') {
                         const data = {
                             boss_id: session.userinfo.boss_id,
                             boss_name: session.userinfo.username,
@@ -110,9 +110,6 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         }
-    },
-    created() {
-        console.log(this.$session.getAll());
     }
 }
 </script>

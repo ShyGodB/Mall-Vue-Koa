@@ -44,6 +44,9 @@ export default {
         if (!this.$session.exists()) {
             this.$router.push('/')
         }
+    },
+    created() {
+        // console.log(this.$session.getAll());
     }
 }
 </script>

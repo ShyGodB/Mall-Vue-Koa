@@ -20,9 +20,9 @@
 
 
 <script>
-import Base from './Base.vue'
-import Avatar from './Avatar.vue'
-import Advanced from './Advanced.vue'
+import Base from './personal/Base.vue'
+import Avatar from './personal/Avatar.vue'
+import Advanced from './personal/Advanced.vue'
 
 export default {
     name: 'personal',
@@ -38,7 +38,7 @@ export default {
     },
     methods: {
         handleClick(tab, event) {
-            console.log(tab, event);
+            // console.log(tab, event);
         }
     }
 }

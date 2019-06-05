@@ -1,9 +1,7 @@
 const Koa = require('koa');
 const json = require('koa-json');
-const path = require('path');
 const bodyParser = require('koa-bodyparser');
 const app = new Koa();
-const formidable = require('koa2-formidable');
 
 const godRouter_view = require('./routes/view/god');
 const bossRouter_view = require('./routes/view/boss');
@@ -15,9 +13,7 @@ const storeRouter_admin = require('./routes/admin/store');
 const goodRouter_admin = require('./routes/admin/good');
 
 
-
 app.use(json());
-app.use(formidable())
 app.use(bodyParser());
 
 

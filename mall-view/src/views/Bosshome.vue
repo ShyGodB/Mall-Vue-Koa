@@ -34,6 +34,11 @@ export default {
         'create': Create,
         'store': Store,
         'goods': Goods
+    },
+    created() {
+        if(this.$session.getAll().token !== 'boss') {
+            this.$router.push('/404');
+        }
     }
 }
 </script>
@@ -42,6 +47,6 @@ export default {
 <style scoped>
 #bosshome {
     margin: 60px 40px 0 40px;
-    min-height: 510px;
+    min-height: 610px;
 }
 </style>
