@@ -8,8 +8,6 @@ router.post("/admin/List-ValuableGood-All", async (ctx) => {
 })
 
 router.post("/admin/deleteGood", async (ctx) => {
-    console.log(111);
-
     const id = ctx.request.body.id;
     await editGood.deleteGood(id);
     ctx.body = { msg: '删除成功' };

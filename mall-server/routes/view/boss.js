@@ -140,4 +140,17 @@ router.post("/view/update-boss-password", async (ctx) => {
     }
 });
 
+
+router.post("/view/delete-good", async (ctx) => {
+    const id = ctx.request.body.id;
+    await editGood.deleteGood(id);
+    ctx.body = { msg: '删除成功' };
+});
+
+router.post("/view/restore-good", async (ctx) => {
+    const id = ctx.request.body.id;
+    await editGood.restoreGood(id);
+    ctx.body = { msg: '恢复成功' };
+});
+
 module.exports = router;

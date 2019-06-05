@@ -34,7 +34,7 @@
             </el-menu-item>
 
             <el-menu-item index="7" class="f-right">
-                <router-link to="/result">搜索结果</router-link>
+                <router-link to="/result/电脑">搜索结果</router-link>
             </el-menu-item>
 
             <el-menu-item index="8" class="f-right">

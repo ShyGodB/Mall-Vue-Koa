@@ -28,6 +28,12 @@ const object = {
         const [rows, fields] = await promisePool.query(sql);
         return rows;
     },
+
+    async listGoodByBossid(data) {
+        const sql = 'select * from good where deleted = 0 and boss_id = ?';
+        const [rows, fields] = await promisePool.query(sql, data);
+        return rows;
+    },
     
     async getGoodByStoreId(data) {
         const sql = 'select * from good where store_id=?';

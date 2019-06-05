@@ -101,6 +101,10 @@ router.post("/view/login", async (ctx) => {
     }
 });
 
+router.post("/view/list-all-good-from-good", async (ctx) => {
+    ctx.body = await editGood.listAllValuableGood();
+});
+
 router.post("/view/get-good", async (ctx) => {
     const id = ctx.request.body.id;
     ctx.body = await editGood.getGoodById(id);
@@ -112,8 +116,15 @@ router.post("/view/list-goods-from-car", async (ctx) => {
     ctx.body = rows;
 });
 
-router.post("/view/list-all-good-from-good", async (ctx) => {
-    ctx.body = await editGood.listAllValuableGood();
+router.post("/view/List-ValuableGood-All", async (ctx) => {
+    const boss_id = ctx.request.body.boss_id;
+    ctx.body = await editGood.listGoodByBossid(boss_id);
 });
+
+router.post("/view/List-DeletedGood-All", async (ctx) => {
+    ctx.body = await editGood.listAllDeletedGood();
+});
+
+
 
 module.exports = router;

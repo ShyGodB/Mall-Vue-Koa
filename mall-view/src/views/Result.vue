@@ -31,9 +31,10 @@
 
 
 <script>
+import axios  from 'axios'
 import Search from '../components/Search.vue'
 import Choose from '../components/result/Choose.vue'
-import Goods from '../components/result/Goods.vue'
+import Goods  from '../components/result/Goods.vue'
 
 export default {
     name: 'result',

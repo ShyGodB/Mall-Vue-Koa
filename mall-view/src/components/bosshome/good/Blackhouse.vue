@@ -1,10 +1,10 @@
 <template>
-    <div class="good-view">
+    <div id="blackhouse-good">
         <el-table
         ref="multipleTable"
-        :data="goodList.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
         tooltip-effect="dark"
         @selection-change="handleSelectionChange"
+        :data="goodList.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
         style="width: 100%">
 
             <el-table-column
@@ -13,102 +13,93 @@
             </el-table-column>
 
             <el-table-column
-            sortable
-            prop="id"
-            label="id"
-            width="100">
+                label="id"
+                sortable
+                width="100"
+                prop="id">
             </el-table-column>
 
             <el-table-column
-            label="store_id"
-            sortable
-            width="120"
-            prop="store_id">
+                label="store_id"
+                sortable
+                width="100"
+                prop="store_id">
             </el-table-column>
 
             <el-table-column
-            sortable
-            prop="store_name"
-            label="store_name"
-            width="120">
+                label="store_name"
+                sortable
+                width="120"
+                prop="store_name">
+            </el-table-column>
+            
+            <el-table-column
+                label="name"
+                sortable
+                width="100"
+                prop="name">
             </el-table-column>
 
             <el-table-column
-            sortable
-            prop="name"
-            label="name"
-            width="120">
+                label="old_price"
+                sortable
+                width="100"
+                prop="old_price">
             </el-table-column>
 
             <el-table-column
-            sortable
-            prop="brand"
-            label="品牌"
-            width="120">
+                label="new_price"
+                sortable
+                width="120"
+                prop="new_price">
             </el-table-column>
 
             <el-table-column
-            sortable
-            prop="old_price"
-            label="old_price"
-            width="120">
+                label="brand"
+                sortable
+                width="100"
+                prop="brand">
             </el-table-column>
 
-            <el-table-column
-            sortable
-            prop="new_price"
-            label="new_price"
-            width="120">
-            </el-table-column>
-
-            <el-table-column label="操作">
+            <el-table-column align="left">
                 <template slot="header" slot-scope="scope">
                     <el-input
                     v-model="search"
                     size="mini"
-                    placeholder="输入关键字搜索 / name"/>
+                    placeholder="输入关键字搜索/ username"/>
                 </template>
-
                 <template slot-scope="scope">
-                    <el-button
-                    size="mini"
-                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-
-                    <el-button
-                    size="mini"
-                    type="danger"
-                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    <el-button size="mini" type="success"
+                    @click="restore(scope.$index, scope.row)">恢复</el-button>
                 </template>
             </el-table-column>
         </el-table>
     </div>
 </template>
 
+
 <script>
 import axios from 'axios'
 
 export default {
-    name: 'good-view',
+    name: 'blackhouse-good',
     data() {
         return {
             search: '',
             goodList: []
-        }
+        };
     },
     methods: {
-        handleEdit(index, row) {
-            console.log(index, row);
-        },
-        handleDelete(index, row) {
+        restore(index, row) {
             const id = row.id;
             axios({
-                url: '/api/view/delete-good',
+                url: '/api/view/restore-good',
                 method: 'post',
                 data: {
                     id: id
                 }
             }).then(res => {
-                if(res.data.msg === '删除成功') {
+                if(res.data.msg === '恢复成功') {
                     this.goodList.splice(index, 1);
                     this.$message({
                         showClose: true,
@@ -118,6 +109,9 @@ export default {
                 }
             })
         },
+        handleEdit(index, row) {
+            console.log(index, row);
+        },
         handleSelectionChange(val) {
             this.multipleSelection = val;
         },
@@ -126,20 +120,14 @@ export default {
         }
     },
     created() {
-        const boss_id = this.$session.getAll().userinfo.boss_id;
         axios({
-            method: 'post',
-            url: '/api/view/List-ValuableGood-All',
-            data: {
-                boss_id: boss_id
-            }
+            url: '/api/view/List-DeletedGood-All',
+            method: 'post'
         }).then(res => {
-            if(res.status === 200) {
-                this.goodList = res.data;
-            }
+            this.goodList = res.data;
         })
     }
-}
+};
 </script>
 
 

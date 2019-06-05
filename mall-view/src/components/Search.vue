@@ -10,9 +10,9 @@
             <el-col :span="14">
                 <div class="search-middle">
                     <div class="search-middle-box">
-                        <input type="text" placeholder="请输入内容" >
+                        <input type="text" v-model="userInput" placeholder="请输入内容" >
                         </input>
-                        <button type="button" id="" name="search">搜索</button>
+                        <button type="button" id="" name="search" @click="search">搜索</button>
                     </div>
 
                     <div class="search-middle-suggestions">
@@ -45,6 +45,28 @@
 <script>
 export default {
     name: 'search',
+    data() {
+        return {
+            userInput: ''
+        }
+    },
+    methods: {
+        search() {
+            console.log(this.userInput);
+            if(this.userInput === '') {
+                this.$message({
+                    message: '请输入内容！',
+                })
+            } else {
+                this.$router.push({
+                    name: 'result',
+                    params: {
+                        keyword: this.userInput
+                    }
+                })
+            }
+        }
+    }
 }
 </script>
 

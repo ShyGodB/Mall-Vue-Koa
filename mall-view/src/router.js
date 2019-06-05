@@ -33,7 +33,7 @@ export default new Router({
            component: () => import(/* webpackChunkName: "about" */ './views/Userinfo.vue')
         },
         {
-           path: '/result',
+           path: '/result/:keyword',
            name: 'result',
            component: () => import(/* webpackChunkName: "about" */ './views/Result.vue')
        },

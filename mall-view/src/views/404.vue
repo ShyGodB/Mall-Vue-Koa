@@ -23,10 +23,18 @@ export default {
         }
     },
     created() {
-        this.$message({
-            showClose: 'true',
-            message: '非商家账号，2秒后自动跳转至主页'
-        })
+        if(this.$session.getAll().token === 'god') {
+            this.$message({
+                showClose: 'true',
+                message: '非商家账号，2秒后自动跳转至主页'
+            })
+        } else {
+            this.$message({
+                showClose: 'true',
+                message: '非买家账号，2秒后自动跳转至主页'
+            })
+        }
+
         setTimeout(() => {
             this.$router.push('/');
         }, 2000);

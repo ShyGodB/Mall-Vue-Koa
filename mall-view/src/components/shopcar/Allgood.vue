@@ -173,8 +173,9 @@ export default {
         }
     },
     created() {
+
         const session = this.$session.getAll();
-        if(session.userinfo !== {} && session.userinfo.god_id) {
+        if(session.token === 'god') {
             const god_id = session.userinfo.god_id;
             axios({
                 url: '/api/view/list-goods-from-car',
@@ -188,11 +189,7 @@ export default {
                 }
             })
         } else {
-            this.$message({
-                showClose: true,
-                message: '当前账号为商家账号，请切换！',
-                type: 'error'
-            });
+            this.$router.push('/404');
         }
     }
 }

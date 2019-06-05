@@ -56,11 +56,11 @@
                 </div>
                 <div class="info-right">
                     <span class="title"> ID：</span>
-                    <input :placeholder="bossinfo.boss_id" id="name"  type="text" value="" disabled="true">
+                    <input :placeholder="bossinfo.boss_id"  type="text" value="" disabled="true">
                 </div>
                 <div class="info-right">
                     <span class="title"> 用户名：</span>
-                    <input :placeholder="bossinfo.username" id="name"  type="text" value="" disabled="true">
+                    <input :placeholder="bossinfo.username" type="text" value="" disabled="true">
                 </div>
                 <div class="info-right">
                     <span class="title"> 实名：</span>
