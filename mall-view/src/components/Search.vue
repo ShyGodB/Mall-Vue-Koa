@@ -10,8 +10,7 @@
             <el-col :span="14">
                 <div class="search-middle">
                     <div class="search-middle-box">
-                        <input type="text" v-model="userInput" placeholder="手机 || 电脑" >
-                        </input>
+                        <input type="text" v-model="userInput" placeholder="手机 || 电脑" ></input>
                         <button type="button" id="" name="search" @click="search">搜索</button>
                     </div>
 

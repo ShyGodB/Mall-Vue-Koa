@@ -159,10 +159,17 @@ export default {
                 }
             }).then(res => {
                 if(res.status === 200) {
-                    this.number = res.data.length;
-                    this.goods = res.data;
-                    this.defaultGoods = res.data;
-                    this.leftgoods = res.data.slice(0, 5);
+                    if(res.data.length !== 0) {
+                        this.number = res.data.length;
+                        this.goods = res.data;
+                        this.defaultGoods = res.data;
+                        this.leftgoods = res.data.slice(0, 5);
+                    } else {
+                        this.$message({
+                            message: '暂无符合您要求的商品商品',
+                            type: 'error'
+                        })
+                    }
                 }
             })
         },
@@ -197,34 +204,38 @@ export default {
             return array;
         }
     },
-    created() {
+    mounted() {
         this.listGood();
     },
-    updated() {
+    beforeUpdate() {
         const item = this.$route.params.item;
         switch(item) {
             case 'complex':
-                this.goods = this.defaultGoods;
+                const data1 = this.defaultGoods;
+                this.goods = this.upSorting(data1, 'id');
                 break;
             case 'sales':
-                const data = this.defaultGoods;
-                this.goods = this.downSorting(data, 'sale');
+                const data2 = this.defaultGoods;
+                this.goods = this.downSorting(data2, 'sale');
                 break;
             case 'news':
-                const data2 = this.defaultGoods;
-                this.goods = this.downSorting(data2, 'time');
+                const data3 = this.defaultGoods;
+                this.goods = this.downSorting(data3, 'time');
                 break;
             case 'upprice':
-                const data3 = this.defaultGoods;
-                this.goods = this.upSorting(data3, 'new_price');
+                const data4 = this.defaultGoods;
+                this.goods = this.upSorting(data4, 'new_price');
                 break;
             case 'downprice':
-                const data4 = this.defaultGoods;
-                this.goods = this.downSorting(data4, 'new_price');
+                const data5 = this.defaultGoods;
+                this.goods = this.downSorting(data5, 'new_price');
                 break;
             default:
                 break;
         }
+    },
+    updated() {
+        this.listGood();
     }
 }
 </script>

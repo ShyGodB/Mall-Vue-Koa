@@ -6,31 +6,36 @@
 
             <el-table-column
                 label="id"
-                width="55"
+                width="100"
+                sortable
                 prop="id">
             </el-table-column>
 
             <el-table-column
                 label="god_id"
                 width="150"
+                sortable
                 prop="god_id">
             </el-table-column>
 
             <el-table-column
                 label="username"
                 width="120"
+                sortable
                 prop="username">
             </el-table-column>
 
             <el-table-column
                 label="mobile"
                 width="120"
+                sortable
                 prop="mobile">
             </el-table-column>
 
             <el-table-column
                 label="email"
                 width="200"
+                sortable
                 prop="email">
             </el-table-column>
 

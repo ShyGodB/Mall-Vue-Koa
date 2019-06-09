@@ -6,30 +6,35 @@
 
             <el-table-column
                 label="id"
-                width="55"
+                width="100"
+                sortable
                 prop="id">
             </el-table-column>
 
             <el-table-column
                 label="store_id"
                 width="120"
+                sortable
                 prop="store_id">
             </el-table-column>
 
             <el-table-column
                 label="store_name"
                 width="120"
+                sortable
                 prop="store_name">
             </el-table-column>
 
             <el-table-column
                 label="boss_id"
+                sortable
                 width="120"
                 prop="boss_id">
             </el-table-column>
 
             <el-table-column
                 label="boss_name"
+                sortable
                 width="120"
                 prop="boss_name">
             </el-table-column>
@@ -37,24 +42,28 @@
             <el-table-column
                 label="name"
                 width="120"
+                sortable
                 prop="name">
             </el-table-column>
 
             <el-table-column
                 label="old_price"
                 width="120"
+                sortable
                 prop="old_price">
             </el-table-column>
 
             <el-table-column
                 label="new_price"
                 width="120"
+                sortable
                 prop="new_price">
             </el-table-column>
 
             <el-table-column
                 label="brand"
                 width="120"
+                sortable
                 prop="brand">
             </el-table-column>
 

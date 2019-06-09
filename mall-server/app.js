@@ -11,6 +11,8 @@ const godRouter_admin = require('./routes/admin/god');
 const bossRouter_admin = require('./routes/admin/boss');
 const storeRouter_admin = require('./routes/admin/store');
 const goodRouter_admin = require('./routes/admin/good');
+const indexRouter_admin = require('./routes/admin/index');
+
 
 
 app.use(json());
@@ -25,6 +27,7 @@ app.use(godRouter_admin.routes()).use(godRouter_admin.allowedMethods());
 app.use(bossRouter_admin.routes()).use(bossRouter_admin.allowedMethods());
 app.use(storeRouter_admin.routes()).use(storeRouter_admin.allowedMethods());
 app.use(goodRouter_admin.routes()).use(goodRouter_admin.allowedMethods());
+app.use(indexRouter_admin.routes()).use(indexRouter_admin.allowedMethods());
 
 
 

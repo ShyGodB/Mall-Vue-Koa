@@ -7,8 +7,8 @@
 
         <div class="shopsearch-right el-col-12">
             <div class="shopsearch-right-search">
-                <input type="text" name="" value="">
-                <button type="button" name="button">搜索</button>
+                <input type="text" v-model="userInput" placeholder="手机 || 电脑" ></input>
+                <button type="button" id="" name="search" @click="search">搜索</button>
             </div>
         </div>
     </div>
@@ -20,7 +20,24 @@ export default {
     name: 'shopsearch',
     data() {
         return {
-
+            userInput: ''
+        }
+    },
+    methods: {
+        search() {
+            if(this.userInput === '') {
+                this.$message({
+                    message: '请输入内容！',
+                })
+            } else {
+                this.$router.push({
+                    name: 'result',
+                    params: {
+                        keyword: this.userInput,
+                        item: 'complex'
+                    }
+                })
+            }
         }
     }
 }

@@ -6,55 +6,57 @@
 
             <el-table-column
                 label="id"
-                width="55"
+                width="60"
+                sortable
                 prop="id">
             </el-table-column>
 
             <el-table-column
                 label="store_id"
-                width="120"
+                width="100"
+                sortable
                 prop="store_id">
             </el-table-column>
 
             <el-table-column
                 label="store_name"
                 width="120"
+                sortable
                 prop="store_name">
             </el-table-column>
 
             <el-table-column
                 label="boss_id"
-                width="120"
+                width="160"
+                sortable
                 prop="boss_id">
             </el-table-column>
 
             <el-table-column
                 label="boss_name"
                 width="120"
+                sortable
                 prop="boss_name">
             </el-table-column>
 
             <el-table-column
                 label="name"
                 width="120"
+                sortable
                 prop="name">
-            </el-table-column>
-
-            <el-table-column
-                label="old_price"
-                width="120"
-                prop="old_price">
             </el-table-column>
 
             <el-table-column
                 label="new_price"
                 width="120"
+                sortable
                 prop="new_price">
             </el-table-column>
 
             <el-table-column
                 label="brand"
                 width="120"
+                sortable
                 prop="brand">
             </el-table-column>
 
@@ -71,6 +73,10 @@
                 </template>
             </el-table-column>
         </el-table>
+
+        <div class="pagination">
+            <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change" layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
+        </div>
     </div>
 </template>
 
@@ -83,10 +89,18 @@ export default {
     data() {
         return {
             search: '',
-            good: []
+            good: [],
+            pageNum: 1,
+            allGood: []
         };
     },
     methods: {
+        change(value) {
+            this.good = this.allGood.slice(11 * (value - 1), 11 * value);
+        },
+        sizeChange(num) {
+            console.log(num);
+        },
         handleDelete(index, row) {
             const id = row.id;
             axios({
@@ -105,20 +119,29 @@ export default {
                     });
                 }
             })
+        },
+        listData() {
+            axios({
+                url: '/api/admin/List-ValuableGood-All',
+                method: 'post'
+            }).then(res => {
+                this.allGood = res.data;
+                this.pageNum = Math.floor(res.data.length / 11) + 1;
+                this.good = res.data.slice(0, 11);
+            })
         }
     },
     created() {
-        axios({
-            url: '/api/admin/List-ValuableGood-All',
-            method: 'post'
-        }).then(res => {
-            this.good = res.data;
-        })
+        this.listData();
     }
 };
 </script>
 
 
 <style scoped>
-
+.pagination {
+    float: right;
+    position: relative;
+    top: 13px;
+}
 </style>

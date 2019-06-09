@@ -6,37 +6,43 @@
 
             <el-table-column
                 label="id"
-                width="55"
+                width="100"
+                sortable
                 prop="id">
             </el-table-column>
 
             <el-table-column
                 label="boss_id"
                 width="150"
+                sortable
                 prop="boss_id">
             </el-table-column>
 
             <el-table-column
                 label="boss_name"
                 width="150"
+                sortable
                 prop="boss_name">
             </el-table-column>
 
             <el-table-column
                 label="name"
                 width="120"
+                sortable
                 prop="name">
             </el-table-column>
 
             <el-table-column
                 label="type"
                 width="120"
+                sortable
                 prop="type">
             </el-table-column>
 
             <el-table-column
                 label="nature"
                 width="200"
+                sortable
                 prop="nature">
             </el-table-column>
 
