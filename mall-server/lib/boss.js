@@ -48,7 +48,7 @@ const object = {
     },
 
     async getBossByBossId(data) {
-        const sql = 'select * from boss where boss_id=?';
+        const sql = 'select * from boss where deleted = 0 and boss_id=?';
         const [rows, fields] = await promisePool.query(sql, data);
         return rows[0];
     },

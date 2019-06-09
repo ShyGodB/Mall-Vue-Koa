@@ -155,16 +155,7 @@ export default {
             message: '个人信息自动保存',
             type: 'warning'
         })
-        axios({
-            url: '/api/view/getbossinfo',
-            method: 'post',
-            data: {
-                boss_id: 'boss-13866666666'
-            }
-        }).then(res => {
-            this.bossinfo = res.data;
-            console.log(this.bossinfo);
-        })
+        this.bossinfo = this.$session.getAll().userinfo;
     }
 }
 </script>

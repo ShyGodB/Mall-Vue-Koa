@@ -157,6 +157,7 @@ import axios from 'axios'
 import md5 from 'md5'
 
 export default {
+    inject: ['reload'],
     name: 'regist-login',
     data() {
         const calculateMethods = {
@@ -215,7 +216,15 @@ export default {
                         usertype: 'god',
                         value: data
                     }
-                });
+                }).then(res => {
+                    if(res.status === 200) {
+                        this.$session.start()
+                        this.$session.set('token', res.data.token);
+                        this.$session.set('userinfo', res.data.body);
+                        this.reload();
+                        // this.$router.push('/');
+                    }
+                })
             },
 
             addBoss: (data) => {
@@ -226,7 +235,15 @@ export default {
                         name: 'boss',
                         value: data
                     }
-                });
+                }).then(res => {
+                    if(res.status === 200) {
+                        this.$session.start()
+                        this.$session.set('token', res.data.token);
+                        this.$session.set('userinfo', res.data.body);
+                        this.reload();
+                        // this.$router.push('/');
+                    }
+                })
             }
         }
         const godMethods = {
@@ -548,7 +565,7 @@ export default {
                 idcard: [{ validator: bossMethods.checkIdcard, trigger: 'blur' }],
                 businesslicense: [{ validator: bossMethods.checkBusinesslicense, trigger: 'blur' }]
             },
-            activeName: 'first',
+            activeName: 'second',
             activeBoss: 0,
             activeGod: 0,
             noClick1: false,

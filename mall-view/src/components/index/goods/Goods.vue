@@ -2,7 +2,7 @@
     <div class="good">
         <a :href="'good/' + item.id" v-for="(item, index) in goods" :key="index">
             <div class="good-img">
-                <img :src="require('../../../' + item.img_1.substring(17, 45))" alt="">
+                <img :src="require('../../../'+item.img_1.substring(item.img_1.length-32))" alt="">
             </div>
             <div class="good-info">
                 <p>{{item.description}}</p>
@@ -24,7 +24,8 @@ export default {
     data() {
         return {
             goods: [],
-            allgood: []
+            allgood: [],
+            url: ''
         }
     },
     created() {
@@ -32,6 +33,9 @@ export default {
             method: 'post',
             url: '/api/view/list-all-good-from-good',
         }).then(res => {
+            const a = res.data[3].img_1;
+            const url = a.substring(a.length - 32);
+            this.url = require('../../../' + url);
             if(res.status === 200) {
                 if(res.data.length !== 0) {
                     this.allgood = res.data;
@@ -104,5 +108,9 @@ export default {
 }
 .good-price i {
     margin-right: 3px;
+}
+.img{
+    width:100px;
+    height:100px;
 }
 </style>

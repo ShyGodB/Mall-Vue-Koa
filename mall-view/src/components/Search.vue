@@ -10,7 +10,7 @@
             <el-col :span="14">
                 <div class="search-middle">
                     <div class="search-middle-box">
-                        <input type="text" v-model="userInput" placeholder="请输入内容" >
+                        <input type="text" v-model="userInput" placeholder="手机 || 电脑" >
                         </input>
                         <button type="button" id="" name="search" @click="search">搜索</button>
                     </div>
@@ -52,7 +52,6 @@ export default {
     },
     methods: {
         search() {
-            console.log(this.userInput);
             if(this.userInput === '') {
                 this.$message({
                     message: '请输入内容！',
@@ -61,7 +60,8 @@ export default {
                 this.$router.push({
                     name: 'result',
                     params: {
-                        keyword: this.userInput
+                        keyword: this.userInput,
+                        item: 'complex'
                     }
                 })
             }

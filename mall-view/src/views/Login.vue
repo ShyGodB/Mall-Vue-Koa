@@ -56,13 +56,12 @@ export default {
                 const data = {
                     username: username,
                     password: password
-                }
+                };
                 axios({
                     url: '/api/view/login',
                     method: 'post',
                     data: data
-                })
-                    .then(res => {
+                }).then(res => {
                         if(res.data.msg === '登录成功') {
                             this.$session.start()
                             this.$session.set('token', res.data.token);
@@ -70,11 +69,11 @@ export default {
                             this.reload();
                             this.$router.push('/');
                         } else {
-                            alert(res.data.msg);
+                            this.$message({
+                                message: '登陆失败，账号或密码错误或者未注册',
+                                type: 'error'
+                            })
                         }
-                    })
-                    .then(error => {
-                        // console.log(error);
                     })
             }
         }

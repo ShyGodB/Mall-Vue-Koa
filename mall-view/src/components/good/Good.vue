@@ -151,11 +151,11 @@ export default {
             const data = res.data[0];
             if(data !== undefined) {
                 this.imgList = [
-                    {url: require('../../' + data.img_1.substring(17, 45))},
-                    {url: require('../../' + data.img_2.substring(17, 45))},
-                    {url: require('../../' + data.img_3.substring(17, 45))},
-                    {url: require('../../' + data.img_4.substring(17, 45))},
-                    {url: require('../../' + data.img_5.substring(17, 45))}
+                    {url: require('../../' + data.img_1.substring(data.img_1.length - 32))},
+                    {url: require('../../' + data.img_2.substring(data.img_2.length - 32))},
+                    {url: require('../../' + data.img_3.substring(data.img_3.length - 32))},
+                    {url: require('../../' + data.img_4.substring(data.img_4.length - 32))},
+                    {url: require('../../' + data.img_5.substring(data.img_5.length - 32))}
                 ];
                 this.good = data
             } else {

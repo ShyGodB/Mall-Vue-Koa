@@ -41,7 +41,11 @@ router.post("/view/addGod", async (ctx) => {
     const registerTime = date.toLocaleString();
     const data1 = [godId, username, nickname, password, mobile, registerTime, email];
     await editGod.addGod(data1);
-    ctx.body = { msg: '添加用户成功' };
+    const rows = await editGod.getGodByGodid(godId);
+    ctx.body = { 
+        token: 'god',
+        body:  rows
+    };
 });
 
 router.post("/view/add-good-to-car", async (ctx) => {

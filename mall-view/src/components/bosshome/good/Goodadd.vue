@@ -1,20 +1,24 @@
 <template >
     <div id="goods-add">
         <el-form :model="goodinfo" ref="goodinfo" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="名字" prop="name">
+            <el-form-item label="名字">
                 <el-input v-model="goodinfo.name"></el-input>
             </el-form-item>
 
-            <el-form-item label="价格" prop="price">
+            <el-form-item label="价格">
                 <el-input v-model="goodinfo.price"></el-input>
             </el-form-item>
 
-            <el-form-item label="描述" prop="description">
+            <el-form-item label="描述">
                 <el-input v-model="goodinfo.description"></el-input>
             </el-form-item>
 
-            <el-form-item label="品牌" prop="brand">
+            <el-form-item label="品牌">
                 <el-input v-model="goodinfo.brand"></el-input>
+            </el-form-item>
+
+            <el-form-item label="标签">
+                <el-input v-model="goodinfo.label" placeholder="每个标签使用 分开"></el-input>
             </el-form-item>
 
             <div class="img-upload">
@@ -57,7 +61,8 @@ export default {
                 name: '',
                 price: '',
                 description: '',
-                brand: ''
+                brand: '',
+                label: ''
             },
             // rules: {
             //     name: [
@@ -86,6 +91,7 @@ export default {
                     const new_price = goodinfo.price;
                     const description = goodinfo.description;
                     const brand = goodinfo.brand;
+                    const label = goodinfo.label;
                     const data = {
                         store_id: store_id,
                         store_name: store_name,
@@ -94,7 +100,8 @@ export default {
                         name: name,
                         new_price: new_price,
                         description: description,
-                        brand: brand
+                        brand: brand,
+                        label: label
                     };
                     const fileArray = this.$refs.upload.uploadFiles;
                     const fd = new FormData();

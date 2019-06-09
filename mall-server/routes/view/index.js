@@ -12,7 +12,9 @@ var storage = multer.diskStorage({
         cb(null, '../mall-view/src/assets/img')
     },
     filename (req, file, cb) {
-        cb(null, Date.now() + '.jpg')
+        const name = file.originalname;
+        const extension = name.substring(name.length - 4);
+        cb(null, 'img-' + Date.now() + extension);
     }
 })
 
@@ -35,8 +37,10 @@ router.post('/view/add-good', upload.array('avatar', 5), async (ctx) => {
     const new_price = data.new_price;
     const description = data.description;
     const brand = data.brand;
+    const label = data.label;
 
-    const data1 = [store_id, store_name, boss_id, boss_name, name, new_price, description, brand, img_1, img_2, img_3, img_4, img_5];
+
+    const data1 = [store_id, store_name, boss_id, boss_name, name, new_price, description, brand, img_1, img_2, img_3, img_4, img_5, label];
     await editGood.addGood(data1);
     
     ctx.body = {msg: '添加成功'};
@@ -125,6 +129,10 @@ router.post("/view/List-DeletedGood-All", async (ctx) => {
     ctx.body = await editGood.listAllDeletedGood();
 });
 
+router.post("/view/list-good-by-keyword", async (ctx) => {
+    const keyword = ctx.request.body.keyword;
+    ctx.body = await editGood.listValuableGoodByKeyword(keyword);
+});
 
 
 module.exports = router;

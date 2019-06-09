@@ -30,6 +30,12 @@ const object = {
         return rows;
     },
 
+    async getGodByGodid(data) {
+        const sql = 'select * from god where deleted = 0 and god_id = ?';
+        const [rows, fields] = await promisePool.query(sql, data);
+        return rows;
+    },
+
     async checkPassword(data) {
         const sql = 'select * from god where deleted = 0 and password=? and id = ?';
         const [rows, fields] = await promisePool.query(sql, data);

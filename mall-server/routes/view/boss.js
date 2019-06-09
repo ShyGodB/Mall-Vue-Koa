@@ -32,7 +32,7 @@ router.post("/view/update-boss-avatar/:id", upload.single('avatar'), async (ctx)
 router.post("/view/addBoss", async (ctx) => {
     const data = ctx.request.body;
     const mobile = data.value.mobile;
-    const boosId = 'boss-' + mobile;
+    const bossId = 'boss-' + mobile;
     const nickname = 'boss-' + mobile;
     const username = data.value.username;
     const email = data.value.email;
@@ -42,9 +42,13 @@ router.post("/view/addBoss", async (ctx) => {
     const realname = data.value.realname;
     const idcard = data.value.idcard;
     const businesslicense = data.value.businesslicense;
-    const data1 = [boosId, username, nickname, password, email, mobile, registerTime, realname, idcard, businesslicense];
+    const data1 = [bossId, username, nickname, password, email, mobile, registerTime, realname, idcard, businesslicense];
     await editBoss.addBoss(data1);
-    ctx.body = { msg: '添加店主成功' };
+    const rows = await editBoss.getBossByBossId(bossId);
+    ctx.body = {
+        token: 'boss',
+        body: rows
+    };
 });
 
 router.post("/view/addstore", async (ctx) => {

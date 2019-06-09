@@ -34,7 +34,13 @@ const object = {
         const [rows, fields] = await promisePool.query(sql, data);
         return rows;
     },
-    
+
+    async listValuableGoodByKeyword(data) {
+        const sql = "select * from good where concat(name, description, brand, label) like concat('%',?,'%')";
+        const [rows, fields] = await promisePool.query(sql, data);
+        return rows;
+    },
+
     async getGoodByStoreId(data) {
         const sql = 'select * from good where store_id=?';
         const [rows, fields] = await promisePool.query(sql, data);
@@ -49,7 +55,7 @@ const object = {
 
     /* 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增 */
     async addGood(data) {
-        const sql = 'insert into good(store_id, store_name, boss_id, boss_name, name, new_price, description, brand, img_1, img_2, img_3, img_4, img_5) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const sql = 'insert into good(store_id, store_name, boss_id, boss_name, name, new_price, description, brand, img_1, img_2, img_3, img_4, img_5, label) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         await promisePool.query(sql, data);
     },
 
