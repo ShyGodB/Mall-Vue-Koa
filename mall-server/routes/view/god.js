@@ -42,7 +42,7 @@ router.post("/view/addGod", async (ctx) => {
     const data1 = [godId, username, nickname, password, mobile, registerTime, email];
     await editGod.addGod(data1);
     const rows = await editGod.getGodByGodid(godId);
-    ctx.body = { 
+    ctx.body = {
         token: 'god',
         body:  rows
     };
@@ -51,7 +51,7 @@ router.post("/view/addGod", async (ctx) => {
 router.post("/view/add-good-to-car", async (ctx) => {
     const data = ctx.request.body;
     const data1 = [
-        data.god_id, data.good_id, data.store_id, data.store_name, 
+        data.god_id, data.good_id, data.store_id, data.store_name,
         data.name, data.num, data.old_price, data.new_price,
         data.subtotal, data.description, data.img];
 

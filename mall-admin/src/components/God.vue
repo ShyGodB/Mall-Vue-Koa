@@ -52,6 +52,10 @@
                 </template>
             </el-table-column>
         </el-table>
+
+        <div class="pagination">
+            <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change" layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
+        </div>
     </div>
 </template>
 
@@ -64,10 +68,18 @@ export default {
     data() {
         return {
             search: '',
-            god: []
+            god: [],
+            allGod: [],
+            pageNum: 1
         };
     },
     methods: {
+        change(value) {
+            this.god = this.allGod.slice(11 * (value - 1), 11 * value);
+        },
+        sizeChange(num) {
+            console.log(num);
+        },
         handleDelete(index, row) {
             const id = row.id;
             axios({
@@ -86,15 +98,20 @@ export default {
                     });
                 }
             })
+        },
+        listData() {
+            axios({
+                url: '/api/admin/List-ValuableGod-All',
+                method: 'post'
+            }).then(res => {
+                this.allGod = res.data;
+                this.pageNum = Math.floor(res.data.length / 11) + 1;
+                this.god = res.data.slice(0, 11);
+            })
         }
     },
     created() {
-        axios({
-            url: '/api/admin/List-ValuableGod-All',
-            method: 'post'
-        }).then(res => {
-            this.god = res.data;
-        })
+        this.listData();
     }
 };
 </script>

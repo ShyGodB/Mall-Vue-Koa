@@ -7,7 +7,7 @@ const editGood = require('../../lib/good');
 const editCar = require('../../lib/car');
 
 
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
     destination (req, file, cb) {
         cb(null, '../mall-view/src/assets/img')
     },
@@ -18,17 +18,17 @@ var storage = multer.diskStorage({
     }
 })
 
-var upload = multer({ storage: storage })
+const upload = multer({ storage: storage })
 
 router.post('/view/add-good', upload.array('avatar', 5), async (ctx) => {
     const files = ctx.req.files; //上传过来的文件
     const data = ctx.query;  // 上传的数据
-    
+
     const img_1 = files[0].path;
     const img_2 = files[1].path;
     const img_3 = files[2].path;
     const img_4 = files[3].path;
-    const img_5 = files[4].path;        
+    const img_5 = files[4].path;
     const store_id = data.store_id;
     const store_name = data.store_name;
     const boss_id = data.boss_id;
@@ -42,7 +42,7 @@ router.post('/view/add-good', upload.array('avatar', 5), async (ctx) => {
 
     const data1 = [store_id, store_name, boss_id, boss_name, name, new_price, description, brand, img_1, img_2, img_3, img_4, img_5, label];
     await editGood.addGood(data1);
-    
+
     ctx.body = {msg: '添加成功'};
 })
 

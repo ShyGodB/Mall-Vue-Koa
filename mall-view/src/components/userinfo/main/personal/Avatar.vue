@@ -1,6 +1,6 @@
 <template>
     <div id="avatar">
-        <div class="avatar-avatar" :style="{backgroundImage: 'url(' + img + ')' }" ref="pic">
+        <div class="avatar-avatar" :style="{backgroundImage: 'url(' + require('../../../../' + img) + ')' }" ref="pic">
         </div>
 
         <div class="avatar-upload">
@@ -31,7 +31,7 @@ export default {
     name: 'avatar',
     data() {
         return {
-            img: require('../../../../assets/tt.png'),
+            img: 'assets/tt.png',
             fileList: [],
             godinfo: {}
         }
@@ -48,9 +48,11 @@ export default {
                 data: fd
             }).then(res => {
                 if(res.status === 200) {
-                    // const url = res.data.avatar_url;
-                    // const src = '../../../../' + url.substring(url.length - 38);
-                    // this.img = require(src);
+                    const url = res.data.avatar_url;
+                    const userinfo = this.$session.getAll().userinfo;
+                    userinfo.avatar_url = url;
+                    this.$session.set('userinfo', userinfo);
+                    this.img = url.substring(url.length - 38);
                     this.$message({
                         message: '恭喜你！头像修改成功！',
                         type: 'success'
@@ -71,7 +73,10 @@ export default {
         }
     },
     created() {
-        this.godinfo = this.$session.getAll();
+        const godinfo = this.$session.getAll().userinfo;
+        this.godinfo = godinfo;
+        const url = godinfo.avatar_url;
+        this.img = url.substring(url.length - 38);
     }
 }
 </script>
@@ -81,7 +86,7 @@ export default {
 .avatar-avatar {
     width: 144px;
     height: 144px;
-    margin: 20px 0  0 20px; ;
+    margin: 20px 0  0 20px;
     border: 1px solid #ffffff;
     border-radius: 50%;
     background-position: center center;

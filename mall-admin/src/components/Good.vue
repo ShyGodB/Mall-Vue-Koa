@@ -42,6 +42,7 @@
             <el-table-column
                 label="name"
                 width="120"
+                show-overflow-tooltip
                 sortable
                 prop="name">
             </el-table-column>

@@ -24,6 +24,10 @@ export default {
     created() {
         if(this.$session.getAll().token !== 'god') {
             this.$router.push('/404');
+        } else {
+            this.$message({
+                message: '可修改信息自动保存'
+            })
         }
     }
 }

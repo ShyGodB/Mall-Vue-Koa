@@ -30,7 +30,7 @@
             </el-col>
 
             <el-col :span="12">
-                <div class="avatar">
+                <div class="avatar" :style="{backgroundImage: 'url(' + require('../../../../' + img) + ')' }" ref="pic">
 
                 </div>
             </el-col>
@@ -47,6 +47,7 @@ export default {
     data() {
         return {
             godinfo: {},
+            img: '',
             rules: {
 
             }
@@ -92,8 +93,10 @@ export default {
         }
     },
     created() {
-        this.godinfo = this.$session.getAll().userinfo;
-        console.log(this.godinfo);
+        const godinfo = this.$session.getAll().userinfo;
+        this.godinfo = godinfo;
+        const url = godinfo.avatar_url;
+        this.img = url.substring(url.length - 38);
     }
 }
 </script>
@@ -106,7 +109,6 @@ export default {
     margin: 20px auto;
     border: 1px solid #ffffff;
     border-radius: 50%;
-    background-image: url(../../../../../public/img/tt.png);
     background-size: 144px 144px;
 }
 </style>

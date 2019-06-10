@@ -63,13 +63,7 @@ export default {
                 description: '',
                 brand: '',
                 label: ''
-            },
-            // rules: {
-            //     name: [
-            //         { required: true, message: '请输入活动名称', trigger: 'blur' },
-            //         { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-            //     ],
-            // }
+            }
         };
     },
     methods: {
@@ -114,8 +108,14 @@ export default {
                         data: fd,
                         params: data
                     }).then(res => {
-                        console.log(res.data);
-
+                        if(res.status === 200) {
+                            this.$message({
+                                message: '添加成功',
+                                type: 'success'
+                            })
+                        }
+                        this.fileList = [];
+                        this.goodinfo = {};
                     })
                 }
             })

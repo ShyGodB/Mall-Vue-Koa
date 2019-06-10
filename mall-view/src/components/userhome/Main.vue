@@ -41,7 +41,9 @@
                     <el-row>
                         <el-col :span="6">
                             <div class="info-left">
-                                <div class="info-left-avatar"></div>
+                                <a href="/userinfo">
+                                    <div class="info-left-avatar"></div>
+                                </a>
 
                                 <div class="info-left-nickname">
                                     半世浮尘半世缘

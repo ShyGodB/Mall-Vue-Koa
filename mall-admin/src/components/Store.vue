@@ -61,6 +61,10 @@
                 </template>
             </el-table-column>
         </el-table>
+
+        <div class="pagination">
+            <el-pagination ref="fenye" background @size-change="sizeChange" @current-change="change" layout="prev, pager, next" :hide-on-single-page="true" :page-count="pageNum"></el-pagination>
+        </div>
     </div>
 </template>
 
@@ -73,10 +77,18 @@ export default {
     data() {
         return {
             search: '',
-            store: []
+            store: [],
+            allStore: [],
+            pageNum: 1
         };
     },
     methods: {
+        change(value) {
+            this.store = this.allStore.slice(11 * (value - 1), 11 * value);
+        },
+        sizeChange(num) {
+            console.log(num);
+        },
         handleDelete(index, row) {
             const id = row.id;
             axios({
@@ -95,15 +107,20 @@ export default {
                     });
                 }
             })
+        },
+        listData() {
+            axios({
+                url: '/api/admin/List-ValuableStore-All',
+                method: 'post'
+            }).then(res => {
+                this.allStore = res.data;
+                this.pageNum = Math.floor(res.data.length / 11) + 1;
+                this.store = res.data.slice(0, 11);
+            })
         }
     },
     created() {
-        axios({
-            url: '/api/admin/List-ValuableStore-All',
-            method: 'post',
-        }).then(res => {
-            this.store = res.data;
-        })
+        this.listData();
     }
 };
 </script>

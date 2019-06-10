@@ -15,13 +15,33 @@
                     </div>
 
                     <div class="search-middle-suggestions">
-                        <a href="#">笔记本电脑</a> |
-                        <a href="#">台式机</a> |
-                        <a href="#">平板电脑</a> |
-                        <a href="#">显示器</a> |
-                        <a href="#">显卡</a> |
-                        <a href="#">手机</a> |
-                        <a href="#">电脑主机</a>
+                        <a href="javascript:;">
+                            <router-link to="/result/笔记本电脑/complex">笔记本电脑</router-link>
+                        </a> |
+
+                        <a href="javascript:;">
+                            <router-link to="/result/台式机/complex">台式机</router-link>
+                        </a> |
+
+                        <a href="javascript:;">
+                            <router-link to="/result/平板电脑/complex">平板电脑</router-link>
+                        </a> |
+
+                        <a href="javascript:;">
+                            <router-link to="/result/显示器/complex">显示器</router-link>
+                        </a> |
+
+                        <a href="javascript:;">
+                            <router-link to="/result/显卡/complex">显卡</router-link>
+                        </a> |
+
+                        <a href="javascript:;">
+                            <router-link to="/result/手机/complex">手机</router-link>
+                        </a> |
+
+                        <a href="javascript:;">
+                            <router-link to="/result/电脑主机/complex">电脑主机</router-link>
+                        </a>
                     </div>
                 </div>
             </el-col>
