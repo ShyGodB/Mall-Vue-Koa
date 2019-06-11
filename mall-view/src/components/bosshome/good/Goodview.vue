@@ -126,18 +126,27 @@ export default {
         }
     },
     created() {
-        const boss_id = this.$session.getAll().userinfo.boss_id;
-        axios({
-            method: 'post',
-            url: '/api/view/List-ValuableGood-All',
-            data: {
-                boss_id: boss_id
-            }
-        }).then(res => {
-            if(res.status === 200) {
-                this.goodList = res.data;
-            }
-        })
+        if(this.$session.exists()) {
+            const boss_id = this.$session.getAll().userinfo.boss_id;
+            axios({
+                method: 'post',
+                url: '/api/view/List-ValuableGood-All',
+                data: {
+                    boss_id: boss_id
+                }
+            }).then(res => {
+                if(res.status === 200) {
+                    this.goodList = res.data;
+                }
+            })
+        } else {
+            this.$message({
+                showClose: true,
+                message: '尚未登陆，请登录',
+                type: 'warning'
+            })
+            this.$router.push("/");
+        }
     }
 }
 </script>

@@ -3,8 +3,8 @@
         <div class="good-box-left el-col-9">
             <div class="img-big">
                 <el-carousel arrow="never" indicator-position="none" :autoplay="false" height="400px" ref="big">
-                    <el-carousel-item v-for="(item,index) in imgList" :key="index" name="index">
-                        <div class="mainBox">
+                    <el-carousel-item v-for="(item,index) in imgList" :key="index" name="index" :ref="'box'+index">
+                        <div class="mainBox" @mouseover="move">
                             <img :src="item.url" class="mainImage" @mouseover="overBigActive(index)" alt="">
                 			<span class="lay"></span>
                 		</div>
@@ -73,6 +73,62 @@ export default {
         }
     },
     methods: {
+        move() {
+            const mainBox = document.getElementsByClassName("mainBox");
+            const lay = document.getElementsByClassName("lay");
+            const superBox = document.getElementsByClassName("superBox");
+            const superImage = document.getElementsByClassName("superImage");
+            const imgSuper = document.getElementsByClassName('img-super')[0];
+
+            for(let i = 0; i < mainBox.length; i++) {
+                mainBox[i].onmouseover = function(){
+                    lay[i].style.display = "block";
+                    superBox[i].style.display = "block";
+                    imgSuper.style.zIndex = 9;
+                }
+
+                mainBox[i].onmouseout = function(){
+                    lay[i].style.display = "none";
+                    superBox[i].style.display = "none";
+                    imgSuper.style.zIndex = -9;
+                }
+
+                mainBox[i].onmousemove = function( ev ){
+                    var ev = ev || event;
+                    var scale = 2;
+
+                    var x = ev.clientX - lay[i].offsetWidth/2 - mainBox[i].offsetLeft - 180;
+                    var y = ev.clientY - lay[i].offsetHeight/2 - mainBox[i].offsetTop - 160;
+
+                    lay[i].style.width = parseInt( mainBox[i].offsetWidth / scale ) + "px";
+                    lay[i].style.height = parseInt( mainBox[i].offsetHeight / scale ) + "px";
+
+                    superImage[i].style.width = mainBox[i].offsetWidth * scale + "px";
+                    superImage[i].style.height = mainBox[i].offsetHeight * scale + "px";
+
+                    if( x < 0 ){
+                        x = 0;
+                    }
+                    if( x >= mainBox[i].offsetWidth - lay[i].offsetWidth ){
+                        x = mainBox[i].offsetWidth - lay[i].offsetWidth;
+                    }
+                    if( y < 0 ){
+                        y = 0;
+                    }
+                    if( y >= mainBox[i].offsetHeight - lay[i].offsetHeight ){
+                        y = mainBox[i].offsetHeight - lay[i].offsetHeight;
+                    }
+
+                    lay[i].style.left = x + "px";
+                    lay[i].style.top = y + "px";
+
+                    var left = scale * lay[i].offsetLeft;
+                    var top = scale * lay[i].offsetTop;
+                    superImage[i].style.left = -left + "px";
+                    superImage[i].style.top = -top + "px";
+                }
+            }
+        },
         overSmallActive(index) {
             this.$refs.big.setActiveItem(index);
         },
@@ -167,64 +223,6 @@ export default {
             }
         })
     }
-}
-window.onload = function(){
-    const mainBox = document.getElementsByClassName("mainBox");
-    const lay = document.getElementsByClassName("lay");
-    const superBox = document.getElementsByClassName("superBox");
-    const superImage = document.getElementsByClassName("superImage");
-    const imgSuper = document.getElementsByClassName('img-super')[0];
-
-
-    for(let i = 0; i < mainBox.length; i++) {
-        mainBox[i].onmouseover = function(){
-            lay[i].style.display = "block";
-            superBox[i].style.display = "block";
-            imgSuper.style.zIndex = 9;
-        }
-
-        mainBox[i].onmouseout = function(){
-            lay[i].style.display = "none";
-            superBox[i].style.display = "none";
-            imgSuper.style.zIndex = -9;
-        }
-
-        mainBox[i].onmousemove = function( ev ){
-            var ev = ev || event;
-            var scale = 2;
-
-            var x = ev.clientX - lay[i].offsetWidth/2 - mainBox[i].offsetLeft - 180;
-            var y = ev.clientY - lay[i].offsetHeight/2 - mainBox[i].offsetTop - 160;
-
-            lay[i].style.width = parseInt( mainBox[i].offsetWidth / scale ) + "px";
-            lay[i].style.height = parseInt( mainBox[i].offsetHeight / scale ) + "px";
-
-            superImage[i].style.width = mainBox[i].offsetWidth * scale + "px";
-            superImage[i].style.height = mainBox[i].offsetHeight * scale + "px";
-
-            if( x < 0 ){
-                x = 0;
-            }
-            if( x >= mainBox[i].offsetWidth - lay[i].offsetWidth ){
-                x = mainBox[i].offsetWidth - lay[i].offsetWidth;
-            }
-            if( y < 0 ){
-                y = 0;
-            }
-            if( y >= mainBox[i].offsetHeight - lay[i].offsetHeight ){
-                y = mainBox[i].offsetHeight - lay[i].offsetHeight;
-            }
-
-            lay[i].style.left = x + "px";
-            lay[i].style.top = y + "px";
-
-            var left = scale * lay[i].offsetLeft;
-            var top = scale * lay[i].offsetTop;
-            superImage[i].style.left = -left + "px";
-            superImage[i].style.top = -top + "px";
-        }
-    }
-
 }
 </script>
 

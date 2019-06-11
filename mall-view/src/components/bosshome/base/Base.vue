@@ -150,12 +150,21 @@ export default {
         }
     },
     created() {
-        this.$message({
-            showClose: true,
-            message: '个人信息自动保存',
-            type: 'warning'
-        })
-        this.bossinfo = this.$session.getAll().userinfo;
+        if(this.$session.exists()) {
+            this.bossinfo = this.$session.getAll().userinfo;
+            this.$message({
+                showClose: true,
+                message: '个人信息自动保存',
+                type: 'warning'
+            })
+        } else {
+            this.$message({
+                showClose: true,
+                message: '尚未登陆，请登录',
+                type: 'warning'
+            })
+            this.$router.push("/");
+        }
     }
 }
 </script>

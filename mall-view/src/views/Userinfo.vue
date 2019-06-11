@@ -22,11 +22,20 @@ export default {
         'usermain': UserMain
     },
     created() {
-        if(this.$session.getAll().token !== 'god') {
-            this.$router.push('/404');
+        if(this.$session.exists()) {
+            if(this.$session.getAll().token !== 'god') {
+                this.$router.push('/404');
+            } else {
+                this.$message({
+                    message: '可修改信息自动保存'
+                })
+            }
         } else {
+            this.$router.push("/");
             this.$message({
-                message: '可修改信息自动保存'
+                showClose: true,
+                message: '尚未登陆，请登录',
+                type: 'warning'
             })
         }
     }

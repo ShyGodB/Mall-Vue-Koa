@@ -54,24 +54,33 @@ export default {
         }
     },
     created() {
-        const session = this.$session.getAll();
-        if(session !== {} && session.userinfo.boss_id) {
-            axios({
-                url: '/api/view/getstore',
-                method: 'post',
-                data: { boss_id : session.userinfo.boss_id}
-            })
-                .then(res => {
-                    if(res.status === 200) {
-                        if(res.data.msg === '尚未创建店铺！') {
-                            this.$message({
-                                showClose: true,
-                                message: res.data.msg
-                            });
-                        }
-                        this.storeinfo = res.data;
-                    }
+        if(this.$session.exists()) {
+            const session = this.$session.getAll();
+            if(session !== {} && session.userinfo.boss_id) {
+                axios({
+                    url: '/api/view/getstore',
+                    method: 'post',
+                    data: { boss_id : session.userinfo.boss_id}
                 })
+                    .then(res => {
+                        if(res.status === 200) {
+                            if(res.data.msg === '尚未创建店铺！') {
+                                this.$message({
+                                    showClose: true,
+                                    message: res.data.msg
+                                });
+                            }
+                            this.storeinfo = res.data;
+                        }
+                    })
+            }
+        } else {
+            this.$message({
+                showClose: true,
+                message: '尚未登陆，请登录',
+                type: 'warning'
+            })
+            this.$router.push("/");
         }
     }
 };

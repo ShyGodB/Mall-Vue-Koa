@@ -41,6 +41,7 @@
 
 <script>
 import axios from 'axios'
+import {rules} from '@/assets/js/rules.js'
 
 export default {
     name: 'baseinfo',
@@ -48,9 +49,7 @@ export default {
         return {
             godinfo: {},
             img: '',
-            rules: {
-
-            }
+            rules: rules
         };
     },
     methods: {
@@ -93,10 +92,20 @@ export default {
         }
     },
     created() {
-        const godinfo = this.$session.getAll().userinfo;
-        this.godinfo = godinfo;
-        const url = godinfo.avatar_url;
-        this.img = url.substring(url.length - 38);
+        if(this.$session.exists()) {
+            const godinfo = this.$session.getAll().userinfo;
+            this.godinfo = godinfo;
+            const url = godinfo.avatar_url;
+            this.img = url.substring(url.length - 38);
+        } else {
+            this.$router.push("/");
+            this.img = 'assets/tt.png';
+            this.$message({
+                showClose: true,
+                message: '尚未登陆，请登录',
+                type: 'warning'
+            })
+        }
     }
 }
 </script>
