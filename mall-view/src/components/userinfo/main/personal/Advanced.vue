@@ -3,8 +3,8 @@
         <el-row>
             <el-col :span="12">
                 <el-form :model="godinfo" status-icon :rules="rules" ref="godinfo" label-width="100px" class="demo-godinfo">
-                    <el-form-item label="身份证号">
-                        <el-input v-model="godinfo.idcard" @change="update('idcard')"></el-input>
+                    <el-form-item label="身份证号" prop="idcard">
+                        <el-input v-model="godinfo.idcard" @change="update('idcard')" maxlength="18"></el-input>
                     </el-form-item>
 
                     <el-form-item label="婚姻状况">
@@ -61,7 +61,10 @@ export default {
             godinfo: {},
             img: '',
             rules: {
-
+                idcard: [
+                    { required: true, message: '请输入身份证号', trigger: 'blur' },
+                    { min: 18, max: 18, message: '长度为 18 个字符', trigger: 'blur' }
+                ]
             },
             options: ['小学', '初中', '高中', '中专','大专','本科', '硕士', '博士','博士后', '保密']
         };
@@ -117,7 +120,8 @@ export default {
             const godinfo = this.$session.getAll().userinfo;
             this.godinfo = godinfo;
             const url = godinfo.avatar_url;
-            this.img = url.substring(url.length - 38);
+            console.log(url);
+            this.img = url.substring(url.length - 22);
         } else {
             this.$router.push("/");
             this.img = 'assets/tt.png';

@@ -11,7 +11,7 @@
                         <el-input v-model="godinfo.username" disabled></el-input>
                     </el-form-item>
 
-                    <el-form-item label="昵称">
+                    <el-form-item label="昵称" prop="nickname">
                         <el-input v-model="godinfo.nickname" @change="update('nickname')" ></el-input>
                     </el-form-item>
 
@@ -24,7 +24,14 @@
                     </el-form-item>
 
                     <el-form-item label="生辰">
-                        <el-input v-model="godinfo.birthday" @change="update('birthday')" ></el-input>
+                        <el-date-picker
+                          v-model="godinfo.birthday"
+                          align="right"
+                          type="date"
+                          placeholder="选择日期"
+                          @change="update('birthday')"
+                          :picker-options="pickerOptions">
+                        </el-date-picker>
                     </el-form-item>
                 </el-form>
             </el-col>
@@ -49,7 +56,44 @@ export default {
         return {
             godinfo: {},
             img: '',
-            rules: rules
+            value1: '',
+            value2: '',
+            rules: {
+                nickname: [
+                    { required: true, message: '请输入昵称', trigger: 'blur' },
+                    { min: 2, max: 16, message: '长度在 2 到 16 个字符', trigger: 'blur' }
+                ],
+                birthday: [
+                    { required: true, message: '请输入昵称', trigger: 'blur' },
+                    { min: 2, max: 16, message: '长度在 2 到 16 个字符', trigger: 'blur' }
+                ]
+            },
+            pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() > Date.now();
+                },
+                shortcuts: [{
+                    text: '今天',
+                    onClick(picker) {
+                        picker.$emit('pick', new Date());
+                    }
+                }, {
+                    text: '昨天',
+                    onClick(picker) {
+                        const date = new Date();
+                        date.setTime(date.getTime() - 3600 * 1000 * 24);
+                        picker.$emit('pick', date);
+                    }
+                }, {
+                    text: '一周前',
+                    onClick(picker) {
+                        const date = new Date();
+                        date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                        picker.$emit('pick', date);
+                    }
+                }]
+            },
+
         };
     },
     methods: {
@@ -63,6 +107,7 @@ export default {
                     break;
                 case 'birthday':
                     this.changeInfo(token, this.godinfo.birthday);
+                    console.log(this.godinfo.birthday);
                     break;
             }
         },
@@ -96,7 +141,7 @@ export default {
             const godinfo = this.$session.getAll().userinfo;
             this.godinfo = godinfo;
             const url = godinfo.avatar_url;
-            this.img = url.substring(url.length - 38);
+            this.img = url.substring(url.length - 22);
         } else {
             this.$router.push("/");
             this.img = 'assets/tt.png';

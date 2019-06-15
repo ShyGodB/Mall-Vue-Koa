@@ -126,7 +126,7 @@ export default {
         }
     },
     created() {
-        if(this.$session.exists()) {
+        if(this.$session.exists() && this.$session.getAll().token === 'boss') {
             const boss_id = this.$session.getAll().userinfo.boss_id;
             axios({
                 method: 'post',

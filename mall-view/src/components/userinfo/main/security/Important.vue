@@ -3,27 +3,27 @@
         <el-row>
             <el-col :span="12">
                 <el-form :model="godinfo" status-icon :rules="rules" ref="godinfo" label-width="100px" class="demo-godinfo">
-                    <el-form-item label="身份证号">
+                    <el-form-item label="身份证号" prop="idcard">
                         <el-input v-model="godinfo.idcard" @change="update('idcard')"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="邮箱">
+                    <el-form-item label="邮箱" prop="email">
                         <el-input v-model="godinfo.email" @change="update('email')"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="手机">
+                    <el-form-item label="手机" prop="mobile">
                         <el-input v-model="godinfo.mobile" @change="update('mobile')"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="微信">
+                    <el-form-item label="微信" prop="wechat">
                         <el-input v-model="godinfo.wechat" @change="update('wechat')"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="QQ">
+                    <el-form-item label="QQ" prop="qq">
                         <el-input v-model="godinfo.qq" @change="update('qq')"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="微博">
+                    <el-form-item label="微博" prop="weibo">
                         <el-input v-model="godinfo.weibo" @change="update('weibo')"></el-input>
                     </el-form-item>
                 </el-form>
@@ -49,7 +49,25 @@ export default {
             godinfo: {},
             img: '',
             rules: {
-
+                idcard: [
+                    { required: true, message: '请输入身份证号', trigger: 'blur' },
+                    { min: 18, max: 18, message: '长度为 18 个字符', trigger: 'blur' }
+                ],
+                email: [
+                    { required: true, message: '请输入身份证号', trigger: 'blur' }
+                ],
+                mobile: [
+                    { required: true, message: '请输入身份证号', trigger: 'blur' }
+                ],
+                wechat: [
+                    { required: true, message: '请输入身份证号', trigger: 'blur' }
+                ],
+                qq: [
+                    { required: true, message: '请输入身份证号', trigger: 'blur' }
+                ],
+                weibo: [
+                    { required: true, message: '请输入身份证号', trigger: 'blur' }
+                ]
             },
             options: ['小学', '初中', '高中', '中专','大专','本科', '硕士', '博士','博士后', '保密']
         };
@@ -58,22 +76,34 @@ export default {
         update(token) {
             switch (token) {
                 case 'idcard':
-                    this.changeInfo(token, this.godinfo.idcard);
+                    if(this.godinfo.email !== '') {
+                        this.changeInfo(token, this.godinfo.idcard);
+                    }
                     break;
                 case 'email':
-                    this.changeInfo(token, this.godinfo.email);
+                    if(this.godinfo.email !== '') {
+                        this.changeInfo(token, this.godinfo.email);
+                    }
                     break;
                 case 'mobile':
-                    this.changeInfo(token, this.godinfo.mobile);
+                    if(this.godinfo.mobile !== '') {
+                        this.changeInfo(token, this.godinfo.mobile);
+                    }
                     break;
                 case 'qq':
-                    this.changeInfo(token, this.godinfo.qq);
+                    if(this.godinfo.qq !== '') {
+                        this.changeInfo(token, this.godinfo.qq);
+                    }
                     break;
                 case 'wechat':
-                    this.changeInfo(token, this.godinfo.wechat);
+                    if(this.godinfo.wechat !== '') {
+                        this.changeInfo(token, this.godinfo.wechat);
+                    }
                     break;
                 case 'weibo':
-                    this.changeInfo(token, this.godinfo.weibo);
+                    if(this.godinfo.weibo !== '') {
+                        this.changeInfo(token, this.godinfo.weibo);
+                    }
                     break;
             }
         },
@@ -107,7 +137,7 @@ export default {
             const godinfo = this.$session.getAll().userinfo;
             this.godinfo = godinfo;
             const url = godinfo.avatar_url;
-            this.img = url.substring(url.length - 38);
+            this.img = url.substring(url.length - 22);
         } else {
             this.$router.push("/");
             this.img = 'assets/tt.png';

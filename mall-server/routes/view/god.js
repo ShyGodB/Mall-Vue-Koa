@@ -1,30 +1,27 @@
 const KoaRouter = require('koa-router');
 const router = new KoaRouter();
+const fs = require('fs');
 const editGod = require('../../lib/god');
 const editCar = require('../../lib/car');
-const multer = require('koa-multer');
+const editAddress = require('../../lib/address');
 
-const storage = multer.diskStorage({
-    destination(req, file, cb) {
-        cb(null, '../mall-view/src/assets/godAvatar')
-    },
-    filename(req, file, cb) {
-        const name = file.originalname;
-        const extension = name.substring(name.length - 4);
-        cb(null, 'god-' + Date.now() + extension);
-    }
-})
 
-const upload = multer({ storage: storage })
-
-router.post("/view/update-god-avatar/:id", upload.single('avatar'), async (ctx) => {
-    const id = ctx.params.id;
-    const path = ctx.req.file.path;
-    const data = [path, id];
-    await editGod.updateGodAvatar(data);
-    ctx.body = {
-        avatar_url: path
-    };
+router.post("/view/update-god-avatar", async (ctx) => {
+    const data = ctx.request.body;
+    const base64 = data.base64;
+    const id = data.id;
+    const base64Data = base64.replace(/^data:image\/\w+;base64,/, "");
+    const dataBuffer = Buffer.from(base64Data, 'base64');
+	const newUserPicturePath = `../mall-view/src/assets/godAvatar/${id}.png`;
+	fs.writeFile (newUserPicturePath, dataBuffer, async (err) => {
+		if (err) {
+            ctx.body = {msg: err};
+		} else {
+            const data1 = [newUserPicturePath, id];
+            await editGod.updateGodAvatar(data1);
+		}
+	});
+    ctx.body = {msg: newUserPicturePath};
 });
 
 
@@ -148,6 +145,22 @@ router.post("/view/update-god-password", async (ctx) => {
         default:
             break;
     }
+});
+
+router.post("/view/add-address", async (ctx) => {
+    const data = ctx.request.body;
+    const god_id = data.god_id;
+    const name = data.name;
+    const area = data.area;
+    const address = data.address;
+    const mobile = data.mobile;
+    const data1 = [god_id, name, area, address, mobile];
+    await editAddress.addAddress(data1);
+    ctx.body = await editAddress.listAddressByGodId(god_id);
+});
+
+router.post("/view/upload-image-test", async (ctx) => {
+    ctx.body = {msg: '成功'};
 });
 
 

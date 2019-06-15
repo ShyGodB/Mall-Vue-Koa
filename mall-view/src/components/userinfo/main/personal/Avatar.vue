@@ -1,29 +1,52 @@
 <template>
     <div id="avatar">
-        <div class="avatar-avatar" :style="{backgroundImage: 'url(' + require('../../../../' + img) + ')' }" ref="pic">
-        </div>
-
-        <div class="avatar-upload">
+        <div class="change-box">
             <el-upload
-            action="#"
-            ref="upload"
-            :auto-upload="false"
-            :file-list="fileList"
+            action="/api/view/upload-image-test"
             list-type="picture-card"
-
-            :on-preview="handlePreview"
-            :on-remove="handleRemove">
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="success" @click="changeAvatar">确定修改</el-button>
-            <div slot="tip" class="el-upload__tip">上传图片不超过500kb</div>
+            :on-progress="progress"
+            :multiple="false"
+            :limit="6"
+            accept="image/*">
+                <el-button type="primary">点击上传</el-button>
             </el-upload>
         </div>
+
+
+        <el-row>
+            <el-col :span="8">
+                <div class="cropper-box">
+                    <VueCropper
+                    ref="cropper"
+                    :img="imgSrc"
+                    :autoCrop="true"
+                    :centerBox="true"
+                    :file-list="fileList"
+                    :outputSize="option.size"
+                    :outputType="option.outputType"
+                    ></VueCropper>
+                </div>
+
+                <el-button type="success" @click="tailor">裁剪</el-button>
+                <el-button type="info" @click="upload">上传</el-button>
+            </el-col>
+
+            <el-col :span="16">
+                <h2> 图片预览区 </h2>
+                <div class="img-preview">
+                    <div class="preview preview-img1" :style="{backgroundImage: 'url(' + src + ')' }"></div>
+
+                    <div class="preview preview-img2" :style="{backgroundImage: 'url(' + src + ')' }"></div>
+
+                    <div class="preview preview-img3" :style="{backgroundImage: 'url(' + src + ')' }"></div>
+                </div>
+            </el-col>
+        </el-row>
+
+
     </div>
 </template>
 
-<div class="avatar">
-
-</div>
 <script>
 import axios from 'axios'
 
@@ -31,28 +54,38 @@ export default {
     name: 'avatar',
     data() {
         return {
-            img: 'assets/tt.png',
+            imgSrc: require('../../../../assets/tt.png'),
+            src: "",
             fileList: [],
-            godinfo: {}
+            godinfo: {},
+            option: {
+                size: 1,
+                outputType: 'png'
+            }
         }
     },
     methods: {
-        changeAvatar() {
+        tailor() {
+            this.$refs.cropper.getCropData((data) => {
+              this.src = data;
+            })
+        },
+        upload() {
             const id = this.$session.getAll().userinfo.id;
-            const file = this.$refs.upload.uploadFiles[0];
-            const fd = new FormData();
-            fd.append('avatar', file.raw);
+            const base64 = this.src;
             axios({
-                url: `/api/view/update-god-avatar/${id}`,
                 method: 'post',
-                data: fd
+                url: '/api/view/update-god-avatar',
+                data: {
+                    base64: base64,
+                    id: id
+                }
             }).then(res => {
                 if(res.status === 200) {
-                    const url = res.data.avatar_url;
+                    const url = res.data.msg;
                     const userinfo = this.$session.getAll().userinfo;
                     userinfo.avatar_url = url;
                     this.$session.set('userinfo', userinfo);
-                    this.img = url.substring(url.length - 38);
                     this.$message({
                         message: '恭喜你！头像修改成功！',
                         type: 'success'
@@ -65,11 +98,8 @@ export default {
                 }
             })
         },
-        handleRemove(file, fileList) {
-            console.log(file, fileList);
-        },
-        handlePreview(file) {
-            console.log(file);
+        progress(event, file, fileList) {
+            this.imgSrc = file.url;
         }
     },
     created() {
@@ -93,17 +123,49 @@ export default {
 
 
 <style scoped>
-.avatar-avatar {
-    width: 144px;
-    height: 144px;
-    margin: 20px 0  0 20px;
+#avatar {
+    margin: 0 20px 20px 20px;
+}
+.cropper-box {
+    width: 300px;
+    height: 300px;
+    margin: 0 0 20px;
+}
+.change-box {
+    margin-bottom: 20px;
+}
+.vue-cropper {
+    margin-bottom: 20px;
+}
+.el-col-8 button {
+    margin-left: 40px;
+}
+.img-preview {
+    height: 220px;
+    padding-top: 20px;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+.preview {
+    float: left;
+    margin-left: 20px;
     border: 1px solid #ffffff;
     border-radius: 50%;
-    background-position: center center;
-    background-repeat:  no-repeat;
-    background-size: 144px 144px;
+    background-size: cover;
 }
-.avatar-upload {
-    margin-top: 30px;
+.preview-img1 {
+    width: 180px;
+    height: 180px;
+}
+.preview-img2 {
+    width: 144px;
+    height: 144px;
+}
+.preview-img3 {
+    width: 100px;
+    height: 100px;
+}
+h2 {
+    margin-bottom: 10px;
 }
 </style>

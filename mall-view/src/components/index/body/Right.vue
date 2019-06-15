@@ -33,7 +33,7 @@
 
                 <el-col :span="8">
                     <div class="right-main-top">
-                        <div class="right-main-right-avatar"></div>
+                        <img class="right-main-right-avatar" :src="require('../../../' + src)">
 
                         <div class="god-name" >
                             Hi, 上帝！
@@ -63,6 +63,7 @@ export default {
   name: 'right',
   data() {
       return {
+          src: '',
           srcs: [
               'https://img1.360buyimg.com/pop/s590x470_jfs/t1/83058/35/212/139874/5ce66fd3Efd972928/3513c3119346209e.jpg!q90!cc_590x470.webp',
               'https://img20.360buyimg.com/babel/s590x470_jfs/t1/82599/14/558/99967/5ceb8b72E12ea2df8/75dae7963a64d79d.jpg!q90!cc_590x470.webp',
@@ -77,6 +78,22 @@ export default {
               { name: '待付款', value: '0'},
               { name: '待评价', value: '0'},
           ]
+      }
+  },
+  created() {
+      if(this.$session.exists()) {
+          const godinfo = this.$session.getAll().userinfo;
+          this.godinfo = godinfo;
+          const url = godinfo.avatar_url;
+          this.src = url.substring(url.length - 22);
+      } else {
+          this.$router.push("/");
+          this.img = 'assets/tt.png';
+          this.$message({
+              showClose: true,
+              message: '尚未登陆，请登录',
+              type: 'warning'
+          })
       }
   }
 }
@@ -133,8 +150,8 @@ img {
 .right-main-right-avatar {
     width: 84px;
     height: 84px;
+    display: block;
     margin: 10px auto;
-    background-image: url(../../../../public/img/tt.png);
     background-size: 84px 84px;
     border: 1px solid #ffffff;
     border-radius: 50%;

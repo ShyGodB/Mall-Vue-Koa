@@ -5,6 +5,7 @@ const editGod = require('../../lib/god');
 const editBoss = require('../../lib/boss');
 const editGood = require('../../lib/good');
 const editCar = require('../../lib/car');
+const editAddress = require('../../lib/address');
 
 
 const storage = multer.diskStorage({
@@ -134,5 +135,9 @@ router.post("/view/list-good-by-keyword", async (ctx) => {
     ctx.body = await editGood.listValuableGoodByKeyword(keyword);
 });
 
+router.post("/view/list-address-by-godId", async (ctx) => {
+    const god_id = ctx.request.body.god_id;
+    ctx.body = await editAddress.listAddressByGodId(god_id);
+});
 
 module.exports = router;

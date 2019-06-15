@@ -1,4 +1,4 @@
-<template>
+w<template>
     <div id="god">
         <el-table
         :data="god.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))"

@@ -45,7 +45,7 @@ export default {
                         message: '输入正确，请继续！',
                         type: 'success'
                     })
-                    this.num ++;
+                    this.num++;
                     callback();
                 }
             })
@@ -54,7 +54,7 @@ export default {
             if (value === '') {
                 callback(new Error('请输入密码'));
             } else {
-                this.num ++;
+                this.num++;
                 callback();
             }
         };
@@ -64,7 +64,7 @@ export default {
             } else if (value !== this.ruleForm.pass) {
                 callback(new Error('两次输入密码不一致!'));
             } else {
-                this.num ++;
+                this.num++;
                 callback();
             }
         };

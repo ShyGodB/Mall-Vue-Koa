@@ -8,10 +8,28 @@
                 :visible.sync="centerDialogVisible"
                 width="30%"
                 center>
-                    <span>需要注意的是内容是默认不居中的</span>
+                    <div class="add-address">
+                        <el-form :model="newAddress" :rules="rules" label-width="80px">
+                            <el-form-item label="收货人" prop="name">
+                                <el-input v-model="newAddress.name"></el-input>
+                            </el-form-item>
+
+                            <el-form-item label="所在地区" prop="area">
+                                <el-input v-model="newAddress.area"></el-input>
+                            </el-form-item>
+
+                            <el-form-item label="地址" prop="address">
+                                <el-input v-model="newAddress.address"></el-input>
+                            </el-form-item>
+
+                            <el-form-item label="手机号" prop="mobile">
+                                <el-input v-model="newAddress.mobile"></el-input>
+                            </el-form-item>
+                        </el-form>
+                    </div>
                     <span slot="footer" class="dialog-footer">
                     <el-button @click="centerDialogVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+                    <el-button type="primary" @click="addaddress">确 定</el-button>
               </span>
             </el-dialog>
         </div>
@@ -19,20 +37,20 @@
         <div class="address el-col-20" v-for="item in info" :key="item.mobile">
             <div class="address-name">{{item.name}}</div>
             <div class="address-info">
-                <el-form  label-width="80px">
-                    <el-form-item label="收货人">
+                <el-form :rules="rules" label-width="80px">
+                    <el-form-item label="收货人" prop="name">
                         <el-input v-model="item.name"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="所在地区">
+                    <el-form-item label="所在地区" prop="area">
                         <el-input v-model="item.area"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="地址">
+                    <el-form-item label="地址" prop="address">
                         <el-input v-model="item.address"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="手机号">
+                    <el-form-item label="手机号" prop="mobile">
                         <el-input v-model="item.mobile"></el-input>
                     </el-form-item>
                 </el-form>
@@ -43,21 +61,67 @@
 
 
 <script>
+import axios from 'axios'
 
 export default {
     name: 'goodaddress',
     data() {
         return {
             centerDialogVisible: false,
-            info: [
-                {
-                    name: '方奇兵',
-                    area: '广东省深圳市宝安区',
-                    address: '西乡接到',
-                    mobile: '18682210201'
-                }
-            ]
+            info: [],
+            newAddress: {
+                name: '',
+                area: '',
+                address: '',
+                mobile: ''
+            },
+            rules: {
+                name: [
+                    { required: true, message: '请输入收货人姓名', trigger: 'blur' }
+                ],
+                area: [
+                    { required: true, message: '请输入所处地区', trigger: 'blur' }
+                ],
+                address: [
+                    { required: true, message: '请输入街道/区号', trigger: 'blur' }
+                ],
+                mobile: [
+                    { required: true, message: '请输入手机号', trigger: 'blur' }
+                ]
+            },
         }
+    },
+    methods: {
+        addaddress() {
+            this.centerDialogVisible = false;
+            const godId = this.$session.getAll().userinfo.id;
+            this.newAddress.god_id = godId;
+            axios({
+                method: 'post',
+                url: '/api/view/add-address',
+                data: this.newAddress
+            }).then(res => {
+                console.log(res.data);
+                if(res.status === 200) {
+                    this.info = res.data;
+                }
+            })
+
+        }
+    },
+    created() {
+        const godId = this.$session.getAll().userinfo.id;
+        axios({
+            method: 'post',
+            url: '/api/view/list-address-by-godId',
+            data: {
+                god_id: godId
+            }
+        }).then(res => {
+            if(res.status === 200) {
+                this.info = res.data;
+            }
+        })
     }
 }
 </script>
