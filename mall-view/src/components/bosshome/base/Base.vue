@@ -17,7 +17,7 @@
                     </el-form-item>
 
                     <el-form-item label="生日" prop="birthday">
-                        <el-input v-model="bossinfo.birthday" @change="update('birtyhday')"></el-input>
+                        <el-input v-model="bossinfo.birthday" @change="update('birthday')"></el-input>
                     </el-form-item>
 
                     <el-form-item label="邮箱" prop="email">
@@ -46,7 +46,7 @@
                 </el-form>
             </div>
 
-            <div class="top-middle"></div>
+            <div class="top-middle" :style="{backgroundImage: 'url(' + require('../../../' + src) + ')' }"></div>
 
             <div class="top-right">
 
@@ -89,6 +89,7 @@ export default {
         return {
             radio: 3,
             bossinfo: {},
+            src: '',
             rules: []
         }
     },
@@ -151,13 +152,17 @@ export default {
     },
     created() {
         if(this.$session.exists()) {
-            this.bossinfo = this.$session.getAll().userinfo;
+            const bossinfo = this.$session.getAll().userinfo;
+            this.bossinfo = bossinfo;
+            const url = bossinfo.avatar_url;
+            this.src = url.substring(url.length - 23);
             this.$message({
                 showClose: true,
                 message: '个人信息自动保存',
                 type: 'warning'
             })
         } else {
+            this.src = 'assets/tt.png';
             this.$message({
                 showClose: true,
                 message: '尚未登陆，请登录',
@@ -187,7 +192,6 @@ export default {
     margin-left: 100px;
     border: 1px solid #FFFFFF;
     border-radius: 50%;
-    background-image: url(../../../../public/img/tt.png);
     background-size: cover;
 }
 

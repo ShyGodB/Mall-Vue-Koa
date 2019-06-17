@@ -21,7 +21,6 @@
                     :img="imgSrc"
                     :autoCrop="true"
                     :centerBox="true"
-                    :file-list="fileList"
                     :outputSize="option.size"
                     :outputType="option.outputType"
                     ></VueCropper>

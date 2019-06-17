@@ -36,7 +36,7 @@
                         <img class="right-main-right-avatar" :src="require('../../../' + src)">
 
                         <div class="god-name" >
-                            Hi, 上帝！
+                            Hi, Everyone！
                         </div>
                         <div class="right-main-right-chioces">
                             <a href="#" v-for="(item, key) in choices" :key="key">
@@ -47,9 +47,7 @@
                     </div>
 
                     <div class="right-main-end">
-                        <div class="">
-
-                        </div>
+                        <div class=""></div>
                     </div>
                 </el-col>
             </el-row>
@@ -81,14 +79,14 @@ export default {
       }
   },
   created() {
-      if(this.$session.exists()) {
+      if(this.$session.exists() && this.$session.getAll().token === 'god') {
           const godinfo = this.$session.getAll().userinfo;
           this.godinfo = godinfo;
           const url = godinfo.avatar_url;
           this.src = url.substring(url.length - 22);
       } else {
           this.$router.push("/");
-          this.img = 'assets/tt.png';
+          this.src = 'assets/tt.png';
           this.$message({
               showClose: true,
               message: '尚未登陆，请登录',

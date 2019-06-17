@@ -70,7 +70,7 @@ const object = {
         const sql = 'update boss set password = ? where deleted = 0 and id = ?';
         await promisePool.query(sql, data);
     },
-    
+
     async deleteBoss(data) {
         const sql = 'update boss set deleted = 1 where id = ?';
         await promisePool.query(sql, data);

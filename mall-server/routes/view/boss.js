@@ -1,31 +1,27 @@
 const KoaRouter = require('koa-router');
 const router = new KoaRouter();
+const fs = require('fs');
 const editBoss = require('../../lib/boss');
 const editStore = require('../../lib/store');
 const editGood = require('../../lib/good');
-const multer = require('koa-multer');
 
-const storage = multer.diskStorage({
-    destination(req, file, cb) {
-        cb(null, '../mall-view/src/assets/bossAvatar')
-    },
-    filename(req, file, cb) {
-        const name = file.originalname;
-        const extension = name.substring(name.length - 4);
-        cb(null, 'boss-' + Date.now() + extension);
-    }
-})
 
-const upload = multer({ storage: storage })
-
-router.post("/view/update-boss-avatar/:id", upload.single('avatar'), async (ctx) => {
-    const id = ctx.params.id;
-    const path = ctx.req.file.path;
-    const data = [path, id];
-    await editBoss.updateBossAvatar(data);
-    ctx.body = {
-        avatar_url: path
-    };
+router.post("/view/update-boss-avatar", async (ctx) => {
+    const data = ctx.request.body;
+    const base64 = data.base64;
+    const id = data.id;
+    const base64Data = base64.replace(/^data:image\/\w+;base64,/, "");
+    const dataBuffer = Buffer.from(base64Data, 'base64');
+	const newUserPicturePath = `../mall-view/src/assets/bossAvatar/${id}.png`;
+	fs.writeFile (newUserPicturePath, dataBuffer, async (err) => {
+		if (err) {
+            ctx.body = {msg: err};
+		} else {
+            const data1 = [newUserPicturePath, id];
+            await editBoss.updateBossAvatar(data1);
+		}
+	});
+    ctx.body = {msg: newUserPicturePath};
 });
 
 
@@ -88,7 +84,7 @@ router.post("/view/update-boss-info", async (ctx) => {
     const id = data.id;
     const data1 = [value, id];
     console.log(data1);
-    
+
     switch(token) {
         case 'nickname':
             await editBoss.updateBossNickname(data1);
@@ -119,7 +115,7 @@ router.post("/view/update-boss-info", async (ctx) => {
             break;
 
     }
-    
+
     ctx.body = {msg: '修改成功'};
 });
 

@@ -70,7 +70,6 @@ export default {
             } else {
                 this.user.hasUser = false;
             }
-            this.reload();
             this.$router.push('/login');
         }
     },
