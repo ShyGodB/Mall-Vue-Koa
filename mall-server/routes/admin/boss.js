@@ -12,7 +12,6 @@ router.post("/admin/deleteBoss", async (ctx) => {
     await editBoss.deleteBoss(id);
     ctx.body = {msg: '删除成功'};
 });
-
 router.post("/admin/List-DeletedBoss-All", async (ctx) => {
     ctx.body = await editBoss.listAllDeletedBoss();
 });

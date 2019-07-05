@@ -606,12 +606,13 @@ export default {
             this.$router.push({path:'/'});
         }
     },
-    async created() {
+    created() {
         axios({
             url: '/api/view/listAllUser',
             method: 'post',
         })
             .then(res => {
+                console.log(res)
                 this.existGodArray = res.data.god;
                 this.existBossArray = res.data.boss;
                 this.existUserArray =res.data.god.concat(res.data.boss);
