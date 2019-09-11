@@ -1,167 +1,25 @@
+const godControl = require('../../control/view/god/index');
 const KoaRouter = require('koa-router');
 const router = new KoaRouter();
-const fs = require('fs');
-const editGod = require('../../lib/god');
-const editCar = require('../../lib/car');
-const editAddress = require('../../lib/address');
 
 
-router.post("/view/update-god-avatar", async (ctx) => {
-    const data = ctx.request.body;
-    const base64 = data.base64;
-    const id = data.id;
-    const base64Data = base64.replace(/^data:image\/\w+;base64,/, "");
-    const dataBuffer = Buffer.from(base64Data, 'base64');
-	const newUserPicturePath = `../mall-view/src/assets/godAvatar/${id}.png`;
-	fs.writeFile (newUserPicturePath, dataBuffer, async (err) => {
-		if (err) {
-            ctx.body = {msg: err};
-		} else {
-            const data1 = [newUserPicturePath, id];
-            await editGod.updateGodAvatar(data1);
-		}
-	});
-    ctx.body = {msg: newUserPicturePath};
-});
+router.post("/view/update-god-avatar", godControl.updateGodAvatar);
 
+router.post("/view/addGod", godControl.addGod);
 
-router.post("/view/addGod", async (ctx) => {
-    const data = ctx.request.body;
-    const usertype = data.usertype;
-    const mobile = data.value.mobile;
-    const godId = 'god-' + mobile;
-    const username = data.value.username;
-    const nickname = 'god-' + mobile;
-    const email = data.value.email;
-    const password = data.value.password;
-    const date = new Date();
-    const registerTime = date.toLocaleString();
-    const data1 = [godId, username, nickname, password, mobile, registerTime, email];
-    await editGod.addGod(data1);
-    const rows = await editGod.getGodByGodid(godId);
-    ctx.body = {
-        token: 'god',
-        body:  rows
-    };
-});
+router.post("/view/add-good-to-car", godControl.addGoodToCar);
 
-router.post("/view/add-good-to-car", async (ctx) => {
-    const data = ctx.request.body;
-    const data1 = [
-        data.god_id, data.good_id, data.store_id, data.store_name,
-        data.name, data.num, data.old_price, data.new_price,
-        data.subtotal, data.description, data.img];
+router.post("/view/update-good-info-in-car", godControl.updateGoodInfoInCar);
 
-    await editCar.addById(data1);
-    ctx.body = { msg: '添加成功' };
-});
+router.post("/view/delete-good-from-car", godControl.deleteGoodFromCar);
 
-router.post("/view/update-good-info-in-car", async (ctx) => {
-    const data = ctx.request.body;
-    const data1 = [data.num, data.subtotal, data.id];
-    await editCar.updateByIdByGod_id(data1);
-    ctx.body = { msg: '更新成功' };
-});
+router.post("/view/update-god-info", godControl.updateGodInfo);
 
-router.post("/view/delete-good-from-car", async (ctx) => {
-    const data = ctx.request.body;
-    const id = data.id;
-    await editCar.deleteById(id);
-    ctx.body = { msg: '删除成功' };
-});
+router.post("/view/update-god-password", godControl.updateGodPassword);
 
-router.post("/view/update-god-info", async (ctx) => {
-    const data = ctx.request.body;
-    const token = data.token;
-    const value = data.value;
-    const id = data.id;
-    const data1 = [value, id];
-    console.log(data1);
+router.post("/view/add-address", godControl.addAddress);
 
-    switch (token) {
-        case 'nickname':
-            await editGod.updateGodNickname(data1);
-            break;
-        case 'gender':
-            await editGod.updateGodGender(data1);
-            break;
-        case 'birthday':
-            await editGod.updateGodBirthday(data1);
-            break;
-        case 'email':
-            await editGod.updateGodEmail(data1);
-            break;
-        case 'mobile':
-            await editGod.updateGodMobile(data1);
-            break;
-        case 'qq':
-            await editGod.updateGodQQ(data1);
-            break;
-        case 'wechat':
-            await editGod.updateGodWechat(data1);
-            break;
-        case 'weibo':
-            await editGod.updateGodWeibo(data1);
-            break;
-        case 'bio':
-            await editGod.updateGodBio(data1);
-            break;
-        case 'idcard':
-            await editGod.updateGodIdcard(data1);
-            break;
-        case 'married':
-            await editGod.updateGodMarried(data1);
-            break;
-        case 'income':
-            await editGod.updateGodIncome(data1);
-            break;
-        case 'education':
-            await editGod.updateGodEducation(data1);
-            break;
-        case 'industry':
-            await editGod.updateGodIndustry(data1);
-            break;
-
-    }
-
-    ctx.body = { msg: '修改成功' };
-});
-
-router.post("/view/update-god-password", async (ctx) => {
-    const data = ctx.request.body;
-    const token = data.token;
-    const id = data.id;
-    const password = data.password
-    const data1 = [password, id]
-    switch (token) {
-        case '验证':
-            const rows = await editGod.checkPassword(data1);
-            ctx.body = rows;
-            break;
-        case '修改':
-            await editGod.updatePassword(data1);
-            ctx.body = { msg: '修改密码成功'};
-            break;
-        default:
-            break;
-    }
-});
-
-router.post("/view/add-address", async (ctx) => {
-    const data = ctx.request.body;
-    const god_id = data.god_id;
-    const name = data.name;
-    const area = data.area;
-    const address = data.address;
-    const mobile = data.mobile;
-    const data1 = [god_id, name, area, address, mobile];
-    await editAddress.addAddress(data1);
-    ctx.body = await editAddress.listAddressByGodId(god_id);
-});
-
-router.post("/view/upload-image-test", async (ctx) => {
-    ctx.body = {msg: '成功'};
-});
+router.post("/view/upload-image-test", godControl.uploadImageTest);
 
 
 module.exports = router;

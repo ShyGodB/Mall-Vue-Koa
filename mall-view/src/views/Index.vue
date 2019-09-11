@@ -46,7 +46,7 @@ export default {
         }
     },
     created() {
-        console.log(this.$session.getAll());
+        // console.log(this.$session.getAll());
     }
 }
 </script>
