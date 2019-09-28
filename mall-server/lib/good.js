@@ -1,77 +1,81 @@
-const mysql = require('mysql2');
-
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '1234qwer',
-    database: 'mall'
-});
-
-const promisePool = pool.promise();
+const { knex, promisePool } = require('../config/index');
 
 const object = {
     /* 查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查 */
     async listAllGood() {
-        const sql = 'select * from good';
-        const [rows, fields] = await promisePool.query(sql);
-        return rows.length;
+        const allGood = await knex('good').select('*');
+        return allGood || [];
     },
 
     async listAllValuableGood() {
-        const sql = 'select * from good where deleted = 0';
-        const [rows, fields] = await promisePool.query(sql);
-        return rows;
+        const good = await knex('good').where({deleted: false});
+        return good;
     },
 
     async listAllDeletedGood() {
-        const sql = 'select * from good where deleted = 1';
-        const [rows, fields] = await promisePool.query(sql);
-        return rows;
+        const deletedGood = await knex('good').where({deleted: true});
+        return deleteGood || [];
     },
 
     async listGoodByBossid(data) {
-        const sql = 'select * from good where deleted = 0 and boss_id = ?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        const goods = await knex('good').where({deleted: false, boss_id: data});
+        return goods || [];
     },
 
     async listValuableGoodByKeyword(data) {
-        const sql = "select * from good where concat(name, description, brand, label) like concat('%',?,'%')";
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        data = '%' + data + '%';
+        const valuableGood = await knex('good').where(function () {
+            if (data) {
+                this.where('name', 'like', data);
+                this.orWhere('description', 'like', data);
+                this.orWhere('brand', 'like', data);
+                this.orWhere('label', 'like', data);
+            }
+        });
+        return valuableGood || [];
     },
 
     async getGoodByStoreId(data) {
-        const sql = 'select * from good where store_id=?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        const storeGoods = await knex('good').where({deleted: false, store_id: data});
+        return storeGoods || [];
     },
 
     async getGoodById(data) {
-        const sql = 'select * from good where id=?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        const good = knex('good').where({deleted: false, id: data});
+        return good || [];
     },
 
     /* 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增 */
     async addGood(data) {
-        const sql = 'insert into good(store_id, store_name, boss_id, boss_name, name, new_price, description, brand, img_1, img_2, img_3, img_4, img_5, label) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        await promisePool.query(sql, data);
+        const insertData = {
+            store_id: data[0],
+            store_name: data[1],
+            boss_id: data[2],
+            boss_name: data[3],
+            name: data[4],
+            new_price: data[5],
+            description: data[6],
+            brand: data[7],
+            img_1: data[8],
+            img_2: data[9],
+            img_3: data[10],
+            img_4: data[11],
+            img_5: data[12],
+            label: data[13]
+        };
+        await knex('good').insert(insertData);
     },
 
     /* 改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改 */
     async deleteGood(data) {
-        const sql = 'update good set deleted = 1 where id = ?';
-        await promisePool.query(sql, data);
+        await knex('good').update({deleted: true}).where({id: data});
     },
 
     async restoreGood(data) {
-        const sql = 'update good set deleted = 0 where id = ?';
-        await promisePool.query(sql, data);
+        await knex('good').update({deleted: false}).where({id: data});
     }
 
 
 };
 
 module.exports = object;
-

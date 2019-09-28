@@ -6,7 +6,7 @@ module.exports = {
     },
     async deleteBoss(ctx, next) {
         const id = ctx.request.body.id;
-        await editBoss.deleteBoss(id);
+        await editBoss.deleteBoss({id});
         ctx.body = {msg: '删除成功'};
     },
     async listAllDeletedBoss(ctx, next) {

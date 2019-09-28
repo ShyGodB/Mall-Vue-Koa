@@ -1,34 +1,25 @@
-const mysql = require('mysql2');
-
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '1234qwer',
-    database: 'mall'
-});
-
-const promisePool = pool.promise();
+const { knex, promisePool } = require('../config/index');
 
 const object = {
-    /* 查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查 */
+    // 查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查
     async listAddressByGodId(data) {
-        const sql = 'select * from address where god_id = ?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        const address = await knex('address').where({god_id: data});
+        return address;
     },
 
-    /* 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增 */
+    // 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增
     async addAddress(data) {
         const sql = 'insert into address(god_id, name, area, address, mobile) values(?, ?, ?, ?, ?)';
         await promisePool.query(sql, data);
+        const insertData = {
+            god_id: data[0],
+            name: data[1],
+            area: data[2],
+            address: data[3],
+            mobile: data[4]
+        };
+        await knex('address').insert(insertData);
     },
-
-    /* 改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改 */
-
-
-    // 修改头像
-
-
 };
 
 module.exports = object;

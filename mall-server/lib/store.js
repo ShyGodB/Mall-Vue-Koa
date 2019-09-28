@@ -1,56 +1,46 @@
-const mysql = require('mysql2');
-
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '1234qwer',
-    database: 'mall'
-});
-
-const promisePool = pool.promise();
+const { knex, promisePool } = require('../config/index');
 
 const object = {
-    /* 查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查 */
+    // 查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查
     async listAllStore() {
-        const sql = 'select * from store';
-        const [rows, fields] = await promisePool.query(sql);
-        return rows;
+        const allStore = await knex('store').select('*');
+        return allStore || [];
     },
 
     async listAllValuableStore() {
-        const sql = 'select *from store where deleted = 0';
-        const [rows, fields] = await promisePool.query(sql);
-        return rows;
+        const valuableStore = await knex('store').where({deleted: false});
+        return valuableStore || [];
     },
 
     async listAllDeletedStore() {
-        const sql = 'select * from store where deleted = 1';
-        const [rows, fields] = await promisePool.query(sql);
-        return rows;
+        const deletedStore = await knex('store').where({deleted: true});
+        return deletedStore || [];
     },
 
     async getStore(data) {
-        const sql = 'select * from store where boss_id=?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        const store = await knex('store').where({deleted: false, boss_id: data});
+        return store || [];
     },
 
-
-    /* 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增 */
+    // 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增
     async addStore(data) {
-        const sql = 'insert into store(boss_id, boss_name, name, type, nature) values(?, ?, ?, ?, ?)';
-        await promisePool.query(sql, data);
+        const insertData = {
+            boss_id: data[0],
+            boss_name: data[1],
+            name: data[2],
+            type: data[3],
+            nature: data[4]
+        };
+        await knex('store').insert(insertData);
     },
 
-    /* 改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改 */
+    // 改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改
     async deleteStore(data) {
-        const sql = 'update store set deleted = 1 where id = ?';
-        await promisePool.query(sql, data);
+        await knex('store').update({deleted: true}).where({id: data});
     },
 
     async restoreStore(data) {
-        const sql = 'update store set deleted = 0 where id = ?';
-        await promisePool.query(sql, data);
+        await knex('store').update({deleted: false}).where({id: data});
     }
 
 };

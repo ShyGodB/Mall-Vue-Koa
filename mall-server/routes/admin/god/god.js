@@ -1,4 +1,4 @@
-const godControl = require('../../control/admin/god/index');
+const godControl = require('../../../control/admin/god/index');
 const KoaRouter = require('koa-router');
 const router = new KoaRouter();
 const md5 = require('md5');

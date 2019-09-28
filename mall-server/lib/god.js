@@ -1,163 +1,132 @@
-const mysql = require('mysql2');
-
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '1234qwer',
-    database: 'mall'
-});
-
-const promisePool = pool.promise();
+const { knex, promisePool } = require('../config/index');
 
 const object = {
 
     /* 查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查 */
     async listAllGod() {
-        const sql = 'select * from god';
-        const [rows, fields] = await promisePool.query(sql);
-        return rows;
+        const allGod = await knex('god').select('*');
+        return allGod || [];
     },
 
     async listAllValuableGod() {
-        const sql = 'select * from god where deleted = 0';
-        const [rows, fields] = await promisePool.query(sql);
-        return rows;
+        const valuableGood = await knex('god').where({deleted: false});
+        return valuableGood || [];
     },
 
     async listAllDeletedGod() {
-        const sql = 'select * from god where deleted = 1';
-        const [rows, fields] = await promisePool.query(sql);
-        return rows;
+        const valuableGood = await knex('god').where({deleted: true});
+        return valuableGood || [];
     },
 
     async getGodByGodid(data) {
-        const sql = 'select * from god where deleted = 0 and god_id = ?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        const god = await knex('god').where({deleted: false, god_id: data});
+        return god || [];
     },
 
     async checkPassword(data) {
-        const sql = 'select * from god where deleted = 0 and password=? and id = ?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        return await knex('god').where({deleted: false, password: data[0], id: data[1]}) || [];
     },
 
 
     /* 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增 */
     async addGod(data) {
-        const sql = 'insert into god(god_id, username, nickname, password, mobile, register_time, email) values(?, ?, ?, ?, ?, ?, ?)';
-        await promisePool.query(sql, data);
+        const insertData = {
+            god_id: data[0],
+            username: data[1],
+            nickname: data[2],
+            password: data[3],
+            mobile: data[4],
+            register_time: data[5],
+            email: data[6]
+        };
+        await knex('god').insert(insertData);
     },
 
     async godLoginByEmail(data) {
-        const sql = 'select * from god where email=? and password=?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        return await knex('god').where({deleted: false, email: data[0], password: data[1]});
     },
 
     async godLoginByMobile(data) {
-        const sql = 'select * from god where mobile=? and password=?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        return await knex('god').where({deleted: false, mobile: data[0], password: data[1]});
     },
 
     async godLoginByUsername(data) {
-        const sql = 'select * from god where username=? and password=?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        return await knex('god').where({deleted: false, username: data[0], password: data[1]});
     },
 
 
     /* 改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改 */
     async updatePassword(data) {
-        const sql = 'update god set password = ? where deleted = 0 and id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({password: data[0]}).where({deleted: false, id: data[1]});
     },
 
     async deleteGod(data) {
-        const sql = 'update god set deleted = 1 where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({deleted: true}).where({id: data});
     },
 
     async restoreGod(data) {
-        const sql = 'update god set deleted = 0 where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({deleted: false}).where({id: data});
     },
 
     async updateGodNickname(data) {
-        const sql = 'update God set nickname = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({nickname: data[0]}).where({id: data[1]});
     },
 
     async updateGodGender(data) {
-        const sql = 'update God set Gender = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({gender: data[0]}).where({id: data[1]});
     },
 
     async updateGodBirthday(data) {
-        const sql = 'update God set Birthday = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({birthday: data[0]}).where({id: data[1]});
     },
 
     async updateGodEmail(data) {
-        const sql = 'update God set Email = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({email: data[0]}).where({id: data[1]});
     },
 
     async updateGodMobile(data) {
-        const sql = 'update God set Mobile = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({mobile: data[0]}).where({id: data[1]});
     },
 
     async updateGodQQ(data) {
-        const sql = 'update God set qq = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({qq: data[0]}).where({id: data[1]});
     },
 
     async updateGodWechat(data) {
-        const sql = 'update God set wechat = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({wechat: data[0]}).where({id: data[1]});
     },
 
     async updateGodWeibo(data) {
-        const sql = 'update God set weibo = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({weibo: data[0]}).where({id: data[1]});
     },
 
     async updateGodBio(data) {
-        const sql = 'update God set bio = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({bio: data[0]}).where({id: data[1]});
     },
 
     async updateGodIdcard(data) {
-        const sql = 'update God set idcard = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({idcard: data[0]}).where({id: data[1]});
     },
 
     async updateGodMarried(data) {
-        const sql = 'update God set married = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({married: data[0]}).where({id: data[1]});
     },
 
     async updateGodIncome(data) {
-        const sql = 'update God set income = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({income: data[0]}).where({id: data[1]});
     },
 
     async updateGodEducation(data) {
-        const sql = 'update God set education = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({education: data[0]}).where({id: data[1]});
     },
 
     async updateGodIndustry(data) {
-        const sql = 'update God set industry = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({industry: data[0]}).where({id: data[1]});
     },
 
     // 修改头像
     async updateGodAvatar(data) {
-        const sql = 'update god set avatar_url = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('god').update({avatar_url: data[0]}).where({id: data[1]});
     },
 
 };

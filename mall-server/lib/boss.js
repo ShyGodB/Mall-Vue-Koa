@@ -1,135 +1,115 @@
-const mysql = require('mysql2');
-
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '1234qwer',
-    database: 'mall'
-});
-
-const promisePool = pool.promise();
+const { knex, promisePool } = require('../config/index');
 
 const object = {
-    /* 查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查 */
+    // 查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查
     async listAllBoss() {
-        const sql = 'select * from boss';
-        const [rows, fields] = await promisePool.query(sql);
-        return rows;
+        const boss =  await knex.select('*').from('boss');
+        return boss;
     },
 
     async listAllValuableBoss() {
-        const sql = 'select * from boss where deleted = 0';
-        const [rows, fields] = await promisePool.query(sql);
-        return rows;
+        const valuableBoss = await knex.select('*').from('boss').where({deleted: false});
+        return valuableBoss;
     },
 
     async listAllDeletedBoss() {
-        const sql = 'select * from boss where deleted = 1';
-        const [rows, fields] = await promisePool.query(sql);
-        return rows;
+        const deletedBoss = await knex.select('*').from('boss').where({deleted: true});
+        return deletedBoss;
     },
 
     async bossLoginByEmail(data) {
-        const sql = 'select * from boss where email=? and password=?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        const boss = await knex('boss').where({email: data[0], password: data[1]});
+        return boss;
     },
 
     async bossLoginByMobile(data) {
-        const sql = 'select * from boss where mobile=? and password=?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        const result = await knex('boss').where({mobile: data[0], password: data[1]});
+        return result;
     },
 
     async bossLoginByUsername(data) {
-        const sql = 'select * from boss where username=? and password=?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        const result = await knex('boss').where({username: data[0], password: data[1]});
+        return result;
     },
 
     async getBossByBossId(data) {
-        const sql = 'select * from boss where deleted = 0 and boss_id=?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows[0];
+        const result = await knex('boss').where({deleted: false, boss_id: data[0]});
+        return result;
     },
 
     async checkPassword(data) {
-        const sql = 'select * from boss where deleted = 0 and password=? and id = ?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        const result = await knex('boss').where({deleted: false, password: data[0], id: data[1]});
+        return result;
     },
 
-    /* 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增 */
+    // 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增
     async addBoss(data) {
-        const sql = 'insert into boss(boss_id, username, nickname, password, email, mobile, register_time, realname, idcard, businesslicense) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        await promisePool.query(sql, data);
+        const insertData = {
+            boss_id: data[0],
+            username: data[1],
+            nickname: data[2],
+            password: data[3],
+            email: data[4],
+            mobile: data[5],
+            register_time: data[6],
+            realname: data[7],
+            idcard: data[8],
+            businesslicense: data[9]
+        }
+        await knex('boss').insert(insertData);
     },
 
-    /* 改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改 */
+    // 改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改
     async updatePassword(data) {
-        const sql = 'update boss set password = ? where deleted = 0 and id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({password: data[0]}).where({deleted: false, id: data[1]});
     },
 
     async deleteBoss(data) {
-        const sql = 'update boss set deleted = 1 where id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({deleted: true}).where({id: data.id});
     },
 
     async restoreBoss(data) {
-        const sql = 'update boss set deleted = 0 where id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({deleted: false}).where({id: data[0]});
     },
 
     async updateBossNickname(data) {
-        const sql = 'update boss set nickname = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({nickname: data[0]}).where({id: data[1]});
     },
 
     async updateBossGender(data) {
-        const sql = 'update boss set Gender = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({gender: data[0]}).where({id: data[1]});
     },
 
     async updateBossBirthday(data) {
-        const sql = 'update boss set Birthday = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({birthday: data[0]}).where({id: data[1]});
     },
 
     async updateBossEmail(data) {
-        const sql = 'update boss set Email = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({email: data[0]}).where({id: data[1]});
     },
 
     async updateBossMobile(data) {
-        const sql = 'update boss set Mobile = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({mobile: data[0]}).where({id: data[1]});
     },
 
     async updateBossQQ(data) {
-        const sql = 'update boss set qq = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({qq: data[0]}).where({id: data[1]});
     },
 
     async updateBossWechat(data) {
-        const sql = 'update boss set wechat = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({wechat: data[0]}).where({id: data[1]});
     },
 
     async updateBossWeibo(data) {
-        const sql = 'update boss set weibo = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({weibo: data[0]}).where({id: data[1]});
     },
 
     async updateBossBio(data) {
-        const sql = 'update boss set bio = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({bio: data[0]}).where({id: data[1]});
     },
 
-    // 修改头像
     async updateBossAvatar(data) {
-        const sql = 'update boss set avatar_url = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('boss').update({avatar_url: data[0]}).where({id: data[1]});
     },
 
 };

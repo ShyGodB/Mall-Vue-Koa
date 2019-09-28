@@ -1,4 +1,4 @@
-const bossControl = require('../../control/view/boss/index');
+const bossControl = require('../../../control/view/boss/index');
 const KoaRouter = require('koa-router');
 const router = new KoaRouter();
 

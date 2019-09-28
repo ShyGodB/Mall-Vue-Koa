@@ -1,4 +1,4 @@
-const godControl = require('../../control/view/god/index');
+const godControl = require('../../../control/view/god/index');
 const KoaRouter = require('koa-router');
 const router = new KoaRouter();
 

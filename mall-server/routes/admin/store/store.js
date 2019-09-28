@@ -1,4 +1,4 @@
-const storeControl = require('../../control/admin/store/index');
+const storeControl = require('../../../control/admin/store/index');
 const KoaRouter = require('koa-router');
 const router = new KoaRouter();
 

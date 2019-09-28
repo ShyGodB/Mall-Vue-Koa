@@ -1,38 +1,41 @@
-const mysql = require('mysql2');
-
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '1234qwer',
-    database: 'mall'
-});
-
-const promisePool = pool.promise();
+const { knex, promisePool } = require('../config/index');
 
 const object = {
-    /* 查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查 */
+    // 查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查查
     async listByGod_id(data) {
-        const sql = 'select * from car where god_id = ?';
-        const [rows, fields] = await promisePool.query(sql, data);
-        return rows;
+        const car = await knex('car').where({god_id: data});
+        return car;
     },
 
-    /* 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增 */
+    // 增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增增
     async addById(data) {
-        const sql = 'insert into car(god_id, good_id, store_id, store_name, name, num, old_price, new_price, subtotal, description, img) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        await promisePool.query(sql, data);
+        const insertData = {
+            god_id: data[0],
+            good_id: data[1],
+            store_id: data[2],
+            store_name: data[3],
+            name: data[4],
+            num: data[5],
+            old_price: data[6],
+            new_price: data[7],
+            subtotal: data[8],
+            description: data[9],
+            img: data[10]
+        };
+        await knex('car').insert(insertData);
     },
 
-    /* 改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改 */
+    // 改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改改
     async updateByIdByGod_id(data) {
-        const sql = 'update car set num = ?, subtotal = ? where id = ?';
-        await promisePool.query(sql, data);
+        await knex('car').update({
+            num: data[0],
+            subtotal: data[1]
+        }).where({id: data[2]});
     },
 
-    /* 删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删 */
+    // 删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删删
     async deleteById(data) {
-        const sql = 'delete from car where id = ?';
-        await promisePool.query(sql, data);
+        await knex('car').del({id: data});
     },
 };
 
