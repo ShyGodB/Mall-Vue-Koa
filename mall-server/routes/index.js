@@ -1,3 +1,6 @@
+const KoaRouter = require('koa-router');
+const router = new KoaRouter();
+
 const godRouter_view = require('./view/god/god');
 const bossRouter_view = require('./view/boss/boss');
 const indexRouter_view = require('./view/main/main');
@@ -10,6 +13,4 @@ const indexRouter_admin = require('./admin/main/main');
 
 
 
-module.exports = {
-
-}
+module.exports = router;

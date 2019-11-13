@@ -68,8 +68,8 @@ const object = {
         await knex('boss').update({deleted: true}).where({id: data.id});
     },
 
-    async restoreBoss(data) {
-        await knex('boss').update({deleted: false}).where({id: data[0]});
+    async restoreBoss(id) {
+        await knex('boss').update({deleted: false}).where({id: id});
     },
 
     async updateBossNickname(data) {

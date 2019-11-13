@@ -14,7 +14,7 @@ const object = {
 
     async listAllDeletedGood() {
         const deletedGood = await knex('good').where({deleted: true});
-        return deleteGood || [];
+        return deletedGood || [];
     },
 
     async listGoodByBossid(data) {
