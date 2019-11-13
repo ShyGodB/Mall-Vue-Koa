@@ -24,9 +24,9 @@
 
 
 <script>
-import Navbar from './components/Nav.vue'
-import Topbar from './components/Topbar.vue'
-import Login  from './views/Login.vue'
+import Navbar from './components/Nav.vue';
+import Topbar from './components/Topbar.vue';
+import Login  from './views/Login.vue';
 
 export default {
     name: 'app',
@@ -38,14 +38,14 @@ export default {
     provide() {
         return {
             reload: this.reload
-        }
+        };
     },
     data() {
         return {
             activeIndex: '1',
             hasUser: false,
             isRouterAlive: true
-        }
+        };
     },
     methods: {
         reload() {
@@ -71,25 +71,25 @@ export default {
             this.$router.push('/login');
         }
     }
-}
+};
 </script>
 
 
 <style>
 nav {
     height: 800px;
-}
+};
 main {
     height: 800px;
-}
+};
 .content-top {
     width: 100%;
     height: 50px;
     line-height: 50px;
     margin-bottom: 20px;
     background: #ffffff;
-}
+};
 .content-end {
     margin-left: 20px;
-}
+};
 </style>
