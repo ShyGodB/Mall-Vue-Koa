@@ -22,74 +22,72 @@
     </div>
 </template>
 
-
 <script>
-import Navbar from './components/Nav.vue';
-import Topbar from './components/Topbar.vue';
-import Login  from './views/Login.vue';
+import Navbar from './components/Nav.vue'
+import Topbar from './components/Topbar.vue'
+import Login from './views/Login.vue'
 
 export default {
     name: 'app',
     components: {
         'navbar': Navbar,
-        "topbar": Topbar,
+        'topbar': Topbar,
         'login': Login
     },
-    provide() {
+    provide () {
         return {
             reload: this.reload
-        };
+        }
     },
-    data() {
+    data () {
         return {
             activeIndex: '1',
             hasUser: false,
             isRouterAlive: true
-        };
+        }
     },
     methods: {
-        reload() {
-            this.isRouterAlive = false;
+        reload () {
+            this.isRouterAlive = false
             if (this.$session.exists()) {
-                this.hasUser = true;
+                this.hasUser = true
             } else {
-                this.hasUser = false;
+                this.hasUser = false
             }
             this.$nextTick(() => {
-                this.isRouterAlive = true;
+                this.isRouterAlive = true
             })
         },
-        handleSelect(key, keyPath) {
-            console.log(key, keyPath);
+        handleSelect (key, keyPath) {
+            console.log(key, keyPath)
         }
     },
-    created() {
+    created () {
         if (this.$session.exists()) {
-            this.hasUser = true;
+            this.hasUser = true
         } else {
-            this.hasUser = false;
-            this.$router.push('/login');
+            this.hasUser = false
+            this.$router.push('/login')
         }
     }
-};
+}
 </script>
-
 
 <style>
 nav {
     height: 800px;
-};
+}
 main {
     height: 800px;
-};
+}
 .content-top {
     width: 100%;
     height: 50px;
     line-height: 50px;
     margin-bottom: 20px;
     background: #ffffff;
-};
+}
 .content-end {
     margin-left: 20px;
-};
+}
 </style>

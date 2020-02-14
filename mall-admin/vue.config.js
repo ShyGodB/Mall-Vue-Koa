@@ -11,7 +11,7 @@ module.exports = {
         hotOnly: false,
         proxy: {
             '/api': {
-                target: 'http://127.0.0.1:3000',
+                target: 'http://192.168.56.11:3000',
                 ws: true,
                 changeOrigin: true,
                 secure: false,

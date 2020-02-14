@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5bc53b34-8399-4773-824b-783cbe6fd6bf" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../mall-admin/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../mall-admin/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mall-admin/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../mall-admin/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mall-admin/src/registerServiceWorker.js" beforeDir="false" afterPath="$PROJECT_DIR$/../mall-admin/src/registerServiceWorker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mall-admin/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/../mall-admin/src/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mall-admin/src/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/../mall-admin/src/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/knex.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/knex.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/boss.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/boss.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/good.js" beforeDir="false" afterPath="$PROJECT_DIR$/lib/good.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
-    </list>
+    <list default="true" id="5bc53b34-8399-4773-824b-783cbe6fd6bf" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -75,35 +63,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="mall-server" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/myProjectFromGithub/Mall-Vue-Koa/mall-server" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="mall-server" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/myProjectFromGithub/Mall-Vue-Koa/mall-server" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="routes" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="mall-server" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/myProjectFromGithub/Mall-Vue-Koa/mall-server" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="routes" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="admin" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="mall-server" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/myProjectFromGithub/Mall-Vue-Koa/mall-server" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="routes" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="admin" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="boss" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="Scope" />
       <pane id="ProjectPane" />
     </panes>
   </component>
@@ -165,11 +125,12 @@
       <workItem from="1573301021979" duration="665000" />
       <workItem from="1573340833520" duration="663000" />
       <workItem from="1573391105692" duration="259000" />
+      <workItem from="1573829227012" duration="39000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20439000" />
+    <option name="totallyTimeSpent" value="20478000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">

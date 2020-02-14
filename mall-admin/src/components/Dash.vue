@@ -34,7 +34,6 @@ export default {
             });
         }
     },
-
     mounted() {
         axios({
             method: 'post',

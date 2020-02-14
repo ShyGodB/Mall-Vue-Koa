@@ -31,7 +31,7 @@ app.use(storeRouter_admin.routes()).use(storeRouter_admin.allowedMethods());
 app.use(goodRouter_admin.routes()).use(goodRouter_admin.allowedMethods());
 app.use(indexRouter_admin.routes()).use(indexRouter_admin.allowedMethods());
 
-// bossProxy.listAllBoss();
+
 
 app.listen(3000, async () => {
 	console.log("Server is running at http://127.0.0.1:3000")
